@@ -6,6 +6,8 @@ const app = express();
 const port = process.env.PORT || 8000;
 const URL = process.env.MONGODB_URL;
 
+app.use(express.json())
+
 app.use("/user",UserRouter)
 
 app.listen(port, () => {
@@ -13,7 +15,12 @@ app.listen(port, () => {
 });
 
 mongoose
-  .connect(URL)
+  .connect(URL,{
+    useCreateIndex:true,
+    useFindAndModify:false,
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+  })
   .then(console.log("Connected"))
   .catch((err) => {
     console.log(err);
