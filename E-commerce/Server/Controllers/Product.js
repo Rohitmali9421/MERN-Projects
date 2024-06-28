@@ -1,7 +1,41 @@
-const express = require("express");
-const router = express.Router();
+const Product = require("../Models/Product");
 
-router.route("/products").get().post();
-router.route("/products/:id").delete().put();
+async function handleGetProduct(req, res) {
+  try {
+    const products = await Product.find();
+    return res.json(products);
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+}
 
-module.exports = router;
+async function handleCreateProduct(req, res) {
+  try {
+    const { product_id, title, price, decription, content, images, category } =
+      req.body;
+    return res.json({ mag: "post" });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+}
+async function handleDeleteProduct(req, res) {
+  try {
+    return res.json({ mas: "delete" });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+}
+async function handleUpdateProduct(req, res) {
+  try {
+    return res.json({ mas: "put" });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+}
+
+module.exports = {
+  handleGetProduct,
+  handleCreateProduct,
+  handleDeleteProduct,
+  handleUpdateProduct,
+};
