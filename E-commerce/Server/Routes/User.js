@@ -1,7 +1,10 @@
 const express=require("express")
-const {handleRegister}=require("../Controllers/User")
+const {handleSignUp,handleLogin,handleGetUser}=require("../Controllers/User")
+const { authenticateToken } = require("../middlewares/Auth")
 const router=express.Router()
 
-router.post("/register",handleRegister)
+router.post("/signUp",handleSignUp)
+router.post("/login",handleLogin)
+router.get("/infor",authenticateToken,handleGetUser)
 
 module.exports=router
