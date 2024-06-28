@@ -1,27 +1,24 @@
 require("dotenv").config();
+
 const express = require("express");
-const mongoose = require("mongoose");
+
 const UserRouter = require("./Routes/User");
-const app = express();
+const connectMongoDB = require("./config/connection");
+
 const port = process.env.PORT || 8000;
-const URL = process.env.MONGODB_URL;
+const URI = process.env.MONGODB_URI;
 
-app.use(express.json())
+const app = express();
 
-app.use("/user",UserRouter)
+//MongoDB Connection 
+connectMongoDB(URI);
+
+//Middlerwares
+app.use(express.json());
+
+//Routes
+app.use("/user", UserRouter);
 
 app.listen(port, () => {
   console.log("server started");
 });
-
-mongoose
-  .connect(URL,{
-    useCreateIndex:true,
-    useFindAndModify:false,
-    useNewUrlParser:true,
-    useUnifiedTopology:true
-  })
-  .then(console.log("Connected"))
-  .catch((err) => {
-    console.log(err);
-  });
