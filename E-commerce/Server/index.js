@@ -3,6 +3,8 @@ require("dotenv").config();
 const express = require("express");
 
 const UserRouter = require("./Routes/User");
+const ProductRouter = require("./Routes/Product");
+const CategoryRouter = require("./Routes/Category");
 const connectMongoDB = require("./config/connection");
 
 const port = process.env.PORT || 8000;
@@ -18,6 +20,8 @@ app.use(express.json());
 
 //Routes
 app.use("/user", UserRouter);
+app.use("/api", CategoryRouter);
+app.use("/api", ProductRouter);
 
 app.listen(port, () => {
   console.log("server started");

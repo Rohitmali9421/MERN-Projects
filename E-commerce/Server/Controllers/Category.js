@@ -1,0 +1,50 @@
+const Category = require("../Models/Category");
+
+async function handleGetCategory(req, res) {
+  try {
+    const category = await Category.find();
+    return res.json(category);
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+}
+async function handleCreateCategory(req, res) {
+  try {
+    const { name } = req.body;
+    const category = await Category.findOne({ name });
+    if (category)
+      return res.status(400).json({ msg: "Category Already Exists" });
+
+    const newCategory = await Category.create({
+      name: name,
+    });
+    return res.json({ msg: "Category Created" });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+}
+async function handleDeleteCategory(req, res) {
+  try {
+    
+    await Category.findByIdAndDelete( req.params.id );
+    return res.json({ msg: "Category Deleted" });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+}
+async function handleUpdateCategory(req, res) {
+  try {
+    const { name } = req.body;
+    await Category.findByIdAndUpdate( {_id:req.params.id},{name} );
+    return res.json({ msg: "Category Updated" });
+  } catch (error) {
+    return res.status(500).json({ msg: error.message });
+  }
+}
+
+module.exports = {
+  handleGetCategory,
+  handleCreateCategory,
+  handleDeleteCategory,
+  handleUpdateCategory,
+};
