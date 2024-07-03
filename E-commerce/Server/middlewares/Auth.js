@@ -1,5 +1,6 @@
 const { getUser } = require("../Services/Auth");
 const User = require("../Models/User");
+
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -11,6 +12,7 @@ const authenticateToken = (req, res, next) => {
   req.user = user;
   next();
 };
+
 const authAdmin = async (req, res, next) => {
   try {
     const userID = req.user.id;
@@ -25,5 +27,5 @@ const authAdmin = async (req, res, next) => {
 };
 module.exports = {
   authenticateToken,
-  authAdmin
+  authAdmin,
 };
