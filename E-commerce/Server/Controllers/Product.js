@@ -1,3 +1,4 @@
+const Category = require("../Models/Category");
 const Product = require("../Models/Product");
 const { deleteOnCloudinary } = require("../Services/Choudinary");
 
@@ -57,6 +58,12 @@ async function handleCreateProduct(req, res) {
       req.body;
     if (!image) return res.status(400).json({ msg: "Image not uploaded" });
 
+    let cat = await Category.findOne({ name: "Phone" });
+
+    if (!cat) {
+      category = await Category.create({ name: "Phone" });
+      
+    }
     const product = await Product.findOne({ product_id });
     if (product)
       return res.status(400).json({ msg: "this product already exists" });
@@ -68,7 +75,7 @@ async function handleCreateProduct(req, res) {
       decription,
       content,
       images: image,
-      category,
+      category:cat.id,
     });
     return res.status(200).json({ msg: "Product Created", newproduct });
   } catch (error) {
