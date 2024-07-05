@@ -39,7 +39,7 @@ async function handleLogin(req, res) {
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
     const accessToken = setUser(user)
-    return res.status(200).json({ Token:accessToken });
+    return res.status(200).json({user:user, token:accessToken });
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }

@@ -1,24 +1,39 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { useAuth } from '../../Contexts/UserContext';
 
 function Login() {
-  const fetchData = async () => {
-    try {
-      const res = await axios.get("http://localhost:8000/api/products");
-      const data = res.data; // Access the data from the response
-      console.log(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email && password) {
+      login(email, password);
+    } else {
+      alert('Please enter both email and password');
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <div>
-      Login
+      <form onSubmit={handleSubmit}>
+        <input 
+          onChange={(e) => setEmail(e.target.value)} 
+          type="email" 
+          placeholder="email" 
+          value={email} 
+          required 
+        />
+        <input 
+          onChange={(e) => setPassword(e.target.value)} 
+          type="password" 
+          placeholder="password" 
+          value={password} 
+          required 
+        />
+        <button type="submit">Login</button>
+      </form>
     </div>
   );
 }
