@@ -33,12 +33,29 @@ const AuthProvider = ({ children }) => {
         email: email,
         password: password,
       });
+      const msg=response.data?.msg
+      console.log(msg)
       const { user, token } = response.data;
       setAuth({ user, token });
       localStorage.setItem('Token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
-      console.error('Login failed:', error);
+      console.log('Login failed:', error);
+    }
+  };
+  const signUp = async (name, email, password) => {
+    try {
+      const response = await axios.post('http://localhost:8000/user/signup', {
+        name,
+        email,
+        password,
+      });
+      const { user, token } = response.data;
+      setAuth({ user, token });
+      localStorage.setItem('Token', token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } catch (error) {
+      console.error('Signup failed:', error);
     }
   };
   
@@ -50,7 +67,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ auth, login, logout,signUp }}>
       {children}
     </AuthContext.Provider>
   );

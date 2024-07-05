@@ -6,14 +6,14 @@ async function handleSignUp(req, res) {
   try {
     const { name, email, password } = req.body;
 
-    const user = await User.findOne({ email: email });
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ msg: "User already exists" });
+    }
 
-    if (user) return res.status(400).json({ msg: "User already exists" });
-
-    if (password.length < 8)
-      return res
-        .status(400)
-        .json({ msg: "Password must be at least 8 characters" });
+    if (password.length < 8) {
+      return res.status(400).json({ msg: "Password must be at least 8 characters" });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
@@ -22,11 +22,16 @@ async function handleSignUp(req, res) {
       password: hashedPassword,
     });
 
-    return res.status(200).json({ msg: "Registration successful" });
+    const accessToken = setUser(newUser);
+    const { password: _, ...userWithoutPassword } = newUser._doc; // Exclude password from the response
+
+    return res.status(200).json({ user: userWithoutPassword, token: accessToken });
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
 }
+
+
 
 async function handleLogin(req, res) {
   try {
@@ -34,7 +39,7 @@ async function handleLogin(req, res) {
 
     const user = await User.findOne({ email: email });
     if (!user) return res.status(400).json({ msg: "User does not exist" });
-
+    
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
