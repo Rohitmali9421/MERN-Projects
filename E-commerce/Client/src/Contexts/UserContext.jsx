@@ -33,8 +33,6 @@ const AuthProvider = ({ children }) => {
         email: email,
         password: password,
       });
-      const msg=response.data?.msg
-      console.log(msg)
       const { user, token } = response.data;
       setAuth({ user, token });
       localStorage.setItem('Token', token);
