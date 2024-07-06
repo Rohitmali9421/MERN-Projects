@@ -2,9 +2,11 @@
 
 
 function Home() {
- return(
-  <h1 className="h-screen w-full bg-blue-100"> Home</h1>
- )
+    return (
+        <main className="bg-blue-100">
+            <img src="/image.png" className="w-full" alt="" />
+        </main>
+    )
 }
 
 export default Home;
