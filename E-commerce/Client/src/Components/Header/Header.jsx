@@ -1,71 +1,79 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { FaBars } from "react-icons/fa";
-import { FaCartPlus } from "react-icons/fa";
+import { FaBars, FaCartPlus, FaRegUser } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
-import { FaRegUser } from "react-icons/fa";
 import { LiaCreativeCommonsSampling } from "react-icons/lia";
+
 function Header() {
+  const [menu, setMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setMenu(!menu);
+  };
+
   return (
-    <header className='w-full  h-16 flex items-center border justify-center'>
-      <nav className='px-4 flex items-center justify-between w-full max-w-[1300px]' >
-
-        <div className="flex items-center ">
-          <FaBars className='mr-4 text-3xl md:hidden' />
-          <Link to="/" className=' text-blue-700 text-2xl font-bold flex items-center'>
-            <LiaCreativeCommonsSampling className=' mr-1' />
-            PeakMart .
+    <header className='w-full h-16 flex items-center border border-t-0 border-x-0 justify-center sticky top-0 backdrop-blur-xl'>
+      <nav className='px-4 flex items-center justify-between w-full max-w-[1300px]'>
+        <div className="flex items-center sm:text-2xl text-lg">
+          <FaBars className='mr-2 md:hidden cursor-pointer' onClick={toggleMenu} />
+          <Link to="/" className='text-blue-500 font-bold flex items-center'>
+            <LiaCreativeCommonsSampling className='mr-1' />
+            PeakMart
           </Link>
         </div>
-
-        <div className='hidden md:flex font-serif' >
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              ` ${isActive ? "text-orange-700" : "text-gray-700"} mx-4 font-medium `
-            }>
-            HOME
-          </NavLink>
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              ` ${isActive ? "text-orange-700" : "text-gray-700"} mx-4  `
-            }>
-            ABOUT
-          </NavLink>
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              ` ${isActive ? "text-orange-700" : "text-gray-700"} mx-4  `
-            }>
-            PRODUCTS
-          </NavLink>
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              ` ${isActive ? "text-orange-700" : "text-gray-700"} mx-4  `
-            }>
-            SUPPORTS
-          </NavLink>
-        </div>
-
-        <div className='flex text-xl'>
-          <div className='flex bg-blue-100  rounded-lg '>
-            <input type="text" className='bg-transparent' />
-            <IoMdSearch className='mx-2 text-xl w-full h-full' />
+        <ul className={`md:flex font-serif items-center text-xs ${menu ? "flex flex-col absolute top-16 left-0 w-full bg-white h-screen" : "hidden"} md:static md:flex-row md:h-auto md:w-auto md:bg-transparent`}>
+          <li>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                ` ${isActive ? "text-orange-500 hover:text-orange-500" : "text-gray-500"} lg:mx-4 mx-2 font-semibold hover:text-gray-700`
+              }>
+              HOME
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                ` ${isActive ? "text-orange-500 hover:text-orange-500" : "text-gray-500"} lg:mx-4 mx-2 font-semibold hover:text-gray-700`
+              }>
+              ABOUT
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/product"
+              className={({ isActive }) =>
+                ` ${isActive ? "text-orange-500 hover:text-orange-500" : "text-gray-500"} lg:mx-4 mx-2 font-semibold hover:text-gray-700`
+              }>
+              PRODUCTS
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/support"
+              className={({ isActive }) =>
+                ` ${isActive ? "text-orange-500 hover:text-orange-500" : "text-gray-500"} lg:mx-4 mx-2 font-semibold hover:text-gray-700`
+              }>
+              SUPPORT
+            </NavLink>
+          </li>
+        </ul>
+        <div className='flex text-base sm:text-xl items-center'>
+          <div className='flex bg-blue-50 justify-between rounded-lg focus-within:border-blue-700 border border-transparent sm:h-9 h-8 sm:w-40 w-32'>
+            <input type="text" className='bg-transparent outline-none text-xs sm:text-sm font-semibold pl-3 w-24 sm:w-32' />
+            <IoMdSearch className='h-full mr-1' />
           </div>
-
-          <Link className='mx-4 '>
-            <FaCartPlus className='text-xl w-full h-full' />
+          <Link to="/cart" className='ml-2 sm:ml-3'>
+            <FaCartPlus className='w-full h-full' />
           </Link>
-          <div className='py-2'>
+          <div className='ml-2 sm:ml-3 py-2'>
             <FaRegUser />
           </div>
-
         </div>
       </nav>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;

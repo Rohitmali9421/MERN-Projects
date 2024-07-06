@@ -10,6 +10,8 @@ import ProductDetails from './Components/Product/ProductDetails.jsx'
 import Product from './Components/Product/Product.jsx'
 import Cart from './Components/Cart/Cart.jsx'
 import AuthProvider from './Contexts/UserContext.jsx'
+import About from './Components/About/About.jsx'
+import Support from './Components/Support/Support.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +22,8 @@ const router = createBrowserRouter(
         <Route path='' element={<Home />} />
         <Route path="product/:id" element={<ProductDetails />} />
         <Route path="product" element={<Product />} />
+        <Route path="about" element={<About />} />
+        <Route path="support" element={<Support />} />
         <Route path="cart" element={<Cart />} />
       </Route>
     </>
