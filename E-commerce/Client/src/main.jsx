@@ -16,10 +16,10 @@ import Support from './Components/Support/Support.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
       <Route path='/' element={<Layout />} >
         <Route path='' element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
         <Route path="product/:id" element={<ProductDetails />} />
         <Route path="product" element={<Product />} />
         <Route path="about" element={<About />} />
@@ -34,8 +34,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-   <AuthProvider>
+    <AuthProvider>
       <RouterProvider router={router} />
-      </AuthProvider>
+    </AuthProvider>
   </React.StrictMode>
 )
