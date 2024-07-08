@@ -16,7 +16,7 @@ function Category() {
                             imageUrl={onecategory.imageURL.url}
                         />
                     )) : (
-                        <p></p>
+                        <p> Not Found</p>
                     )
                 }
                 {
@@ -27,7 +27,7 @@ function Category() {
                             imageUrl={onecategory.imageURL.url}
                         />
                     )) :
-                        null
+                        (<p> Not Found</p>)
                 }
 
             </div>
