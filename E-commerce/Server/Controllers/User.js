@@ -4,7 +4,7 @@ const { setUser } = require("../Services/Auth");
 
 async function handleSignUp(req, res) {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, image } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -12,7 +12,9 @@ async function handleSignUp(req, res) {
     }
 
     if (password.length < 8) {
-      return res.status(400).json({ msg: "Password must be at least 8 characters" });
+      return res
+        .status(400)
+        .json({ msg: "Password must be at least 8 characters" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -20,18 +22,19 @@ async function handleSignUp(req, res) {
       name,
       email,
       password: hashedPassword,
+      profilePhoto:image,
     });
 
     const accessToken = setUser(newUser);
     const { password: _, ...userWithoutPassword } = newUser._doc; // Exclude password from the response
 
-    return res.status(200).json({ user: userWithoutPassword, token: accessToken });
+    return res
+      .status(200)
+      .json({ user: userWithoutPassword, token: accessToken });
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
 }
-
-
 
 async function handleLogin(req, res) {
   try {
@@ -39,12 +42,12 @@ async function handleLogin(req, res) {
 
     const user = await User.findOne({ email: email });
     if (!user) return res.status(400).json({ msg: "User does not exist" });
-    
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
-    const accessToken = setUser(user)
-    return res.status(200).json({user:user, token:accessToken });
+    const accessToken = setUser(user);
+    return res.status(200).json({ user: user, token: accessToken });
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }

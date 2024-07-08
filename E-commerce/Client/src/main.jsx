@@ -12,6 +12,7 @@ import Cart from './Components/Cart/Cart.jsx'
 import AuthProvider from './Contexts/UserContext.jsx'
 import About from './Components/About/About.jsx'
 import Support from './Components/Support/Support.jsx'
+import CategoryProvider from './Contexts/CategoryContext.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,9 +34,11 @@ const router = createBrowserRouter(
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  </React.StrictMode>
+ 
+    <CategoryProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </CategoryProvider>
+ 
 )

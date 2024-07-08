@@ -19,6 +19,10 @@ const userSchema = mongoose.Schema({
     type:Number,
     default:0
   },
+  profilePhoto: {
+    type: Object,
+    required: true,
+  },
   cart:{
     type:Array,
     default:[]
