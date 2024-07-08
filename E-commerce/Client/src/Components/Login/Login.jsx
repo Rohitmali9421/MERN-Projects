@@ -24,10 +24,9 @@ function Login() {
     }
   };
 
-  // Redirect if user is already authenticated
   if (auth.token) {
     navigate('/');
-    return null; // or return a loading state/component
+    return null; 
   }
 
   return (
