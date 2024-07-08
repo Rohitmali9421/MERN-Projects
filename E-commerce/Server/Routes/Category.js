@@ -6,13 +6,14 @@ const {
   handleUpdateCategory,
 } = require("../Controllers/Category");
 const { authenticateToken, authAdmin } = require("../middlewares/Auth");
+const uploadMiddleware = require("../middlewares/Multer");
 
 const router = express.Router();
 
 router
   .route("/category")
   .get(handleGetCategory)
-  .post(authenticateToken, authAdmin, handleCreateCategory);
+  .post(authenticateToken, authAdmin,uploadMiddleware, handleCreateCategory);
 
 router
   .route("/category/:id")
