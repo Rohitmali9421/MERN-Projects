@@ -7,9 +7,14 @@ import { useAuth } from '../../Contexts/UserContext';
 
 function Header() {
   const [menu, setMenu] = useState(false);
-  const { auth } = useAuth()
+  const { auth, logout } = useAuth()
   const toggleMenu = () => {
     setMenu(!menu);
+  };
+
+  const [dropdown, setDropdown] = useState(false);
+  const toggleDropdown = () => {
+    setDropdown(!dropdown);
   };
 
   return (
@@ -71,13 +76,44 @@ function Header() {
 
           {
             auth.user ?
-              (<img className="ml-2 sm:ml-3  w-5  rounded-full" src={auth.user.profilePhoto.url} alt="" />)
+              (<img id='1' className="ml-2 sm:ml-3  w-5  rounded-full"
+                onMouseEnter={() => setDropdown(true)}
+                onMouseLeave={() => setDropdown(false)}
+                src={auth.user.profilePhoto.url}
+                alt="" />)
               :
-              (<div className='ml-2 sm:ml-3 py-2'>
+              (<div
+                className='ml-2 sm:ml-3 py-2'
+                onMouseEnter={() => setDropdown(true)}
+                onMouseLeave={() => setDropdown(false)}
+              >
                 <FaRegUser />
               </div>)
           }
-
+          {dropdown && (
+            auth.user ? (<div
+              className="absolute ml-16 sm:ml-28 top-5 mt-2 w-28 h-20 bg-transparent rounded-md "
+              onMouseEnter={() => setDropdown(true)}
+              onMouseLeave={() => setDropdown(false)}
+            >
+              <button
+                onClick={logout}
+                className=" mt-10 block text-center font-bold text-white w-full  px-4 py-2 text-sm border  backdrop-blur-xl  bg-blue-500"
+              >
+                Logout
+              </button>
+            </div>) : (<div
+              className="absolute ml-16 sm:ml-28 top-5 mt-2 w-28 h-20 bg-transparent rounded-md "
+              onMouseEnter={() => setDropdown(true)}
+              onMouseLeave={() => setDropdown(false)}
+            >
+              <Link to="/login"
+                className=" mt-10 block text-center font-bold text-white w-full bg-blue-500  px-4 py-2 text-sm border   backdrop-blur-xl"
+              >
+                Login
+              </Link>
+            </div>)
+          )}
         </div>
       </nav>
     </header>
