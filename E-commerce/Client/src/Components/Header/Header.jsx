@@ -3,10 +3,11 @@ import { Link, NavLink } from 'react-router-dom'
 import { FaBars, FaCartPlus, FaRegUser } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
 import { LiaCreativeCommonsSampling } from "react-icons/lia";
+import { useAuth } from '../../Contexts/UserContext';
 
 function Header() {
   const [menu, setMenu] = useState(false);
-
+  const { auth } = useAuth()
   const toggleMenu = () => {
     setMenu(!menu);
   };
@@ -67,9 +68,16 @@ function Header() {
           <Link to="/cart" className='ml-2 sm:ml-3'>
             <FaCartPlus className='w-full h-full' />
           </Link>
-          <div className='ml-2 sm:ml-3 py-2'>
-            <FaRegUser />
-          </div>
+
+          {
+            auth.user ?
+              (<img className="ml-2 sm:ml-3  w-5  rounded-full" src={auth.user.profilePhoto.url} alt="" />)
+              :
+              (<div className='ml-2 sm:ml-3 py-2'>
+                <FaRegUser />
+              </div>)
+          }
+
         </div>
       </nav>
     </header>

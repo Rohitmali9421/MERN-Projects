@@ -26,11 +26,10 @@ function Category() {
                             name={onecategory.name}
                             imageUrl={onecategory.imageURL.url}
                         />
-                    )) : (
-                        <p></p>
-                    )
+                    )) :
+                        null
                 }
-                
+
             </div>
         </div>
     )
