@@ -61,8 +61,7 @@ async function handleCreateProduct(req, res) {
     let cat = await Category.findOne({ name: "Phone" });
 
     if (!cat) {
-      category = await Category.create({ name: "Phone" });
-      
+      return res.status(400).json({ msg: "Category does not exists" });
     }
     const product = await Product.findOne({ product_id });
     if (product)

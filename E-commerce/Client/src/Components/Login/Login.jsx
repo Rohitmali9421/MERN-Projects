@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../Contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
   const { login, auth } = useAuth();
@@ -67,12 +67,16 @@ function Login() {
                 className="block w-full rounded-md border-0  py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
+            <Link to="/signup">
+            <p className='text-end mt-2 text-sm text-blue-400' >New to PeekMart ? Create an account</p>
+            </Link>
+            
           </div>
 
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="flex w-full justify-center rounded-md  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-400 bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
             >
               Sign in
             </button>
