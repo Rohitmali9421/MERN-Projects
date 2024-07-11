@@ -58,7 +58,7 @@ async function handleCreateProduct(req, res) {
       req.body;
     if (!image) return res.status(400).json({ msg: "Image not uploaded" });
 
-    let cat = await Category.findOne({ name: "Phone" });
+    let cat = await Category.findOne({ name: category });
 
     if (!cat) {
       return res.status(400).json({ msg: "Category does not exists" });
