@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
+import { useAuth } from '../../Contexts/UserContext';
 function ProductDetails() {
+  const{addToCart}=useAuth()
   const { id } = useParams()
   const [product, setProduct] = useState([])
   const fetchProducts = async () => {
@@ -12,17 +14,10 @@ function ProductDetails() {
       console.error('Failed to fetch Popular Products info:', error);
     }
   };
-  const addToCart = async (e) => {
+  const handleaddToCart = async (e) => {
     e.preventDefault()
-    try {
-      const response = await axios.patch('http://localhost:8000/user/cart', {
-        productId: id
-      });
-      console.log(response.data)
-    } catch (error) {
-      console.error('Failed to fetch user info:', error);
-      localStorage.removeItem('Token');
-    }
+    addToCart(id)
+   
   }
   useEffect(() => {
     fetchProducts()
@@ -37,7 +32,7 @@ function ProductDetails() {
         <h1 className='font-semibold'>$192.00</h1>
         <p className='text-sm '>PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.</p>
 
-        <button onClick={addToCart} className="text-white   hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5  my-4  bg-blue-700 focus:outline-none ">Add To cart</button>
+        <button onClick={handleaddToCart} className="text-white   hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5  my-4  bg-blue-700 focus:outline-none ">Add To cart</button>
 
         <div className='border rounded-md  w-full my-3 '>
           <div className='flex items-center gap-4 p-6 '>
