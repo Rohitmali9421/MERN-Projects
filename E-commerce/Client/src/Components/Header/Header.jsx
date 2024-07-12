@@ -18,7 +18,7 @@ function Header() {
   };
 
   return (
-    <header className='w-full h-16 flex items-center border border-t-0 border-x-0 justify-center sticky top-0 backdrop-blur-xl'>
+    <header className='w-full h-16 flex items-center border border-t-0 border-x-0 justify-center sticky top-0 backdrop-blur-xl z-50'>
       <nav className='px-4 flex items-center justify-between w-full max-w-[1300px]'>
         <div className="flex items-center sm:text-2xl text-lg">
           <FaBars className='mr-2 md:hidden cursor-pointer' onClick={toggleMenu} />

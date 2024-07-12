@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -10,37 +10,50 @@ const AuthProvider = ({ children }) => {
   });
 
   const initializeAuth = async () => {
-    const token = localStorage.getItem('Token');
+    const token = localStorage.getItem('token');
     if (token) {
       try {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         const response = await axios.get('http://localhost:8000/user/infor');
         setAuth({ user: response.data, token });
+       
       } catch (error) {
         console.error('Failed to fetch user info:', error);
-        localStorage.removeItem('Token');
+        localStorage.removeItem('token');
       }
     }
   };
+  const addToCart = async (id) => {
+    try {
+      await axios.patch('http://localhost:8000/user/cart', {
+        productId: id
+      });
+      toast.success("Added to cart");
+    } catch (error) {
+      console.error('Failed to fetch user info:', error);
+      localStorage.removeItem('Token');
+    }
+  }
 
   useEffect(() => {
     initializeAuth();
-  }, []);
+  }, [initializeAuth,addToCart]);
 
   const login = async (email, password) => {
     try {
       const response = await axios.post('http://localhost:8000/user/login', {
-        email: email,
-        password: password,
+        email,
+        password,
       });
       const { user, token } = response.data;
       setAuth({ user, token });
-      localStorage.setItem('Token', token);
+      localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
       console.log('Login failed:', error);
     }
   };
+
   const signUp = async (name, email, password) => {
     try {
       const response = await axios.post('http://localhost:8000/user/signup', {
@@ -50,22 +63,21 @@ const AuthProvider = ({ children }) => {
       });
       const { user, token } = response.data;
       setAuth({ user, token });
-      localStorage.setItem('Token', token);
+      localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
       console.error('Signup failed:', error);
     }
   };
-  
 
   const logout = () => {
     setAuth({ user: null, token: null });
-    localStorage.removeItem('Token');
+    localStorage.removeItem('token');
     delete axios.defaults.headers.common['Authorization'];
   };
 
   return (
-    <AuthContext.Provider value={{ auth,setAuth, login, logout,signUp }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, logout, signUp,addToCart }}>
       {children}
     </AuthContext.Provider>
   );
