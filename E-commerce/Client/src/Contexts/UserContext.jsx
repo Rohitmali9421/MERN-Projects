@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -16,28 +17,28 @@ const AuthProvider = ({ children }) => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         const response = await axios.get('http://localhost:8000/user/infor');
         setAuth({ user: response.data, token });
-       
       } catch (error) {
         console.error('Failed to fetch user info:', error);
         localStorage.removeItem('token');
       }
     }
   };
+
   const addToCart = async (id) => {
     try {
       await axios.patch('http://localhost:8000/user/cart', {
         productId: id
       });
       toast.success("Added to cart");
+      initializeAuth()
     } catch (error) {
-      console.error('Failed to fetch user info:', error);
-      localStorage.removeItem('Token');
+      console.error('Failed to add to cart:', error);
     }
-  }
+  };
 
   useEffect(() => {
     initializeAuth();
-  }, [initializeAuth,addToCart]);
+  }, []);
 
   const login = async (email, password) => {
     try {
@@ -50,7 +51,7 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
-      console.log('Login failed:', error);
+      console.error('Login failed:', error);
     }
   };
 
@@ -77,7 +78,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, login, logout, signUp,addToCart }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, logout, signUp, addToCart }}>
       {children}
     </AuthContext.Provider>
   );
