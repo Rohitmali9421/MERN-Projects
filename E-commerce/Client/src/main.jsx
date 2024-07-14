@@ -16,6 +16,11 @@ import CategoryProvider from './Contexts/CategoryContext.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard.jsx';
+import Dashboard from './Components/AdminDashboard/Dashboard.jsx';
+import Products from './Components/AdminDashboard/Products.jsx';
+import Category from './Components/AdminDashboard/Category.jsx';
+import Orders from './Components/AdminDashboard/Orders.jsx';
+import Coupons from './Components/AdminDashboard/Coupons.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,7 +35,13 @@ const router = createBrowserRouter(
         <Route path="support" element={<Support />} />
         <Route path="cart" element={<Cart />} />
       </Route>
-        <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/admin" element={<AdminDashboard />} >
+        <Route path="" element={<Dashboard />} />
+        <Route path="products" element={<Products />} />
+        <Route path="category" element={<Category />} />
+        <Route path="orders" element={<Orders />} />
+        <Route path="coupons" element={<Coupons />} />
+      </Route>
     </>
   )
 );
