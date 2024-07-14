@@ -6,7 +6,7 @@ import PopularProducts from "./PopularProducts/PopularProducts";
 
 function Home() {
     return (
-        
+
         <main>
             <div className="bg-blue-100 w-full grid grid-cols-2 py-14 lg:py-20">
                 <div className=" ml-8 sm:ml-10 md:ml-24 flex justify-center font-semibold text-2xl flex-col font-serif">
@@ -21,8 +21,9 @@ function Home() {
                     <img className="w-[70%] " src="https://res.cloudinary.com/dhturqqs5/image/upload/v1720344466/Ecommerce-MERN/UI%20Items/Homepage/sqdmnkqxf1iey5tl0nj6.png" alt="" />
                 </div>
             </div >
-
-            <Category />
+            
+                <Category />
+            
             <PopularProducts />
             <OurServices />
 
