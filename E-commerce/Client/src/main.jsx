@@ -15,6 +15,7 @@ import Support from './Components/Support/Support.jsx';
 import CategoryProvider from './Contexts/CategoryContext.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import AdminDashboard from './Components/AdminDashboard/AdminDashboard.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
         <Route path="support" element={<Support />} />
         <Route path="cart" element={<Cart />} />
       </Route>
+        <Route path="/admin" element={<AdminDashboard />} />
     </>
   )
 );
