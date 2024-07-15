@@ -1,20 +1,23 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
-import Login from './Components/Login/Login.jsx';
-import SignUp from './Components/Signup/SignUp.jsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import './index.css';
+import AuthProvider from './Contexts/UserContext.jsx';
+import CategoryProvider from './Contexts/CategoryContext.jsx';
+
 import Layout from './Components/Layout/Layout.jsx';
 import Home from './Components/Home/Home.jsx';
+import Login from './Components/Login/Login.jsx';
+import SignUp from './Components/Signup/SignUp.jsx';
 import ProductDetails from './Components/Product/ProductDetails.jsx';
 import Product from './Components/Product/Product.jsx';
 import Cart from './Components/Cart/Cart.jsx';
-import AuthProvider from './Contexts/UserContext.jsx';
 import About from './Components/About/About.jsx';
 import Support from './Components/Support/Support.jsx';
-import CategoryProvider from './Contexts/CategoryContext.jsx';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard.jsx';
 import Dashboard from './Components/AdminDashboard/Dashboard.jsx';
 import Products from './Components/AdminDashboard/Products.jsx';
@@ -35,7 +38,7 @@ const router = createBrowserRouter(
         <Route path="support" element={<Support />} />
         <Route path="cart" element={<Cart />} />
       </Route>
-      <Route path="/admin" element={<AdminDashboard />} >
+      <Route path="/admin" element={<AdminDashboard />}>
         <Route path="" element={<Dashboard />} />
         <Route path="products" element={<Products />} />
         <Route path="category" element={<Category />} />
