@@ -37,14 +37,15 @@ const router = createBrowserRouter(
         <Route path="about" element={<About />} />
         <Route path="support" element={<Support />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="/admin" element={<AdminDashboard />}>
+          <Route path="" element={<Dashboard />} />
+          <Route path="products" element={<Products />} />
+          <Route path="category" element={<Category />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="coupons" element={<Coupons />} />
+        </Route>
       </Route>
-      <Route path="/admin" element={<AdminDashboard />}>
-        <Route path="" element={<Dashboard />} />
-        <Route path="products" element={<Products />} />
-        <Route path="category" element={<Category />} />
-        <Route path="orders" element={<Orders />} />
-        <Route path="coupons" element={<Coupons />} />
-      </Route>
+
     </>
   )
 );
