@@ -8,7 +8,7 @@ import { LiaCreativeCommonsSampling } from "react-icons/lia";
 import { GiNotebook } from "react-icons/gi";
 import { BiSolidCoupon } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
-import { Link,  Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 function AdminDashboard() {
     const [menu, toggleMenu] = useState(false);
 
@@ -21,10 +21,12 @@ function AdminDashboard() {
 
             <div className={`${menu ? "" : "-translate-x-full"} fixed top-0 left-0 z-40 w-64 h-screen transition-transform md:translate-x-0 bg-white`}>
                 <div className='px-4 flex justify-between  items-center h-20 border-b'>
-                    <div className='flex items-center '>
-                        <LiaCreativeCommonsSampling className='mr-2 text-3xl text-blue-500' />
-                        <h1 className='font-bold text-2xl  text-blue-500'>PeekMart</h1>
-                    </div>
+                    <Link to="/">
+                        <div className='flex items-center '>
+                            <LiaCreativeCommonsSampling className='mr-2 text-3xl text-blue-500' />
+                            <h1 className='font-bold text-2xl  text-blue-500'>PeekMart</h1>
+                        </div>
+                    </Link>
                     <IoIosArrowDropleftCircle className='md:hidden block text-blue-500 text-xl' onClick={handleMenuToggle} />
                 </div>
                 <div className=' flex flex-col justify-between px-4 h-full'>
@@ -72,7 +74,7 @@ function AdminDashboard() {
 
             </div>
 
-            <div className="w-full h-screen bg-blue-50 md:pl-64">
+            <div className="w-full  bg-blue-50 md:pl-64">
                 <nav className='w-full h-20 bg-white border'>
                     <FaBars className='md:hidden block ' onClick={handleMenuToggle} />
                 </nav>
