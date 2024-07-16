@@ -10,7 +10,6 @@ function Products() {
     try {
       const response = await axios.get('http://localhost:8000/api/products');
       setProduct(response.data);
-      console.log(response.data)
     } catch (error) {
       console.error('Failed to fetch Popular Products info:', error);
     }
@@ -49,8 +48,8 @@ function Products() {
       <div className="flex items-center my-3">
         <img
           className="w-16 rounded-sm mr-4"
-          src={item.image || "https://html.hixstudio.net/ebazer/assets/img/product/prodcut-1.jpg"}
-          alt={item.title || "Product"}
+          src={item.images.url }
+          alt={item.title }
         />
         <h1 className="font-medium">{item.title}</h1>
       </div>

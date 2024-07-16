@@ -24,6 +24,7 @@ import Products from './Components/AdminDashboard/Products.jsx';
 import Category from './Components/AdminDashboard/Category.jsx';
 import Orders from './Components/AdminDashboard/Orders.jsx';
 import Coupons from './Components/AdminDashboard/Coupons.jsx';
+import AddProduct from './Components/AdminDashboard/AddProduct.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
       <Route path="/admin" element={<AdminDashboard />}>
         <Route path="" element={<Dashboard />} />
         <Route path="products" element={<Products />} />
+        <Route path="products/add" element={<AddProduct />} />
         <Route path="category" element={<Category />} />
         <Route path="orders" element={<Orders />} />
         <Route path="coupons" element={<Coupons />} />
