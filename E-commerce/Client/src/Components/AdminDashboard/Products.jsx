@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import {Link} from "react-router-dom"
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
@@ -27,9 +28,11 @@ function Products() {
             <IoSearch className='md:text-xl text-sm ' />
             <input className='outline-none text-xs md:px-2 px-1 w-24 sm:w-full' type="text" placeholder='Search By Product Name' />
           </div>
+          <Link to="/admin/products/add" >
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 md:py-3  px-2 rounded text-xs w-28">
             + Add Product
           </button>
+          </Link>
         </div>
         <div className='w-full py-6 overflow-x-scroll'>
           <table className="w-full">
@@ -42,40 +45,40 @@ function Products() {
               </tr>
             </thead>
             <tbody>
-            {Product?.map((item, index) => (
-  <tr className="border-b-2" key={index}>
-    <td>
-      <div className="flex items-center my-3">
-        <img
-          className="w-16 rounded-sm mr-4"
-          src={item.images.url }
-          alt={item.title }
-        />
-        <h1 className="font-medium">{item.title}</h1>
-      </div>
-    </td>
-    <td>
-      <div className="flex items-center my-3 w-full justify-center">
-        ${item.price}
-      </div>
-    </td>
-    <td>
-      <div className="flex items-center my-3 justify-center">
-        {item.category}
-      </div>
-    </td>
-    <td>
-      <div className="flex items-center my-3 justify-center">
-        <button className="text-blue-500">
-          <FaRegEdit className="text-xl text-blue-700" />
-        </button>
-        <button className="text-red-500 ml-2">
-          <RiDeleteBin6Line className="text-xl text-red-500" />
-        </button>
-      </div>
-    </td>
-  </tr>
-))}
+              {Product?.map((item, index) => (
+                <tr className="border-b-2" key={index}>
+                  <td>
+                    <div className="flex items-center my-3">
+                      <img
+                        className="w-16 rounded-sm mr-4"
+                        src={item.images.url}
+                        alt={item.title}
+                      />
+                      <h1 className="font-medium">{item.title}</h1>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="flex items-center my-3 w-full justify-center">
+                      ${item.price}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="flex items-center my-3 justify-center">
+                      {item.category}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="flex items-center my-3 justify-center">
+                      <button className="text-blue-500">
+                        <FaRegEdit className="text-xl text-blue-700" />
+                      </button>
+                      <button className="text-red-500 ml-2">
+                        <RiDeleteBin6Line className="text-xl text-red-500" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
 
             </tbody>
           </table>
