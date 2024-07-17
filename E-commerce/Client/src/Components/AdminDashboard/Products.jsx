@@ -4,8 +4,10 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import axios from 'axios';
+import { useCategory } from '../../Contexts/CategoryContext';
 function Products() {
   const [Product, setProduct] = useState(null);
+ const category=useCategory()
 
   const fetchProducts = async () => {
     try {
@@ -64,7 +66,9 @@ function Products() {
                   </td>
                   <td>
                     <div className="flex items-center my-3 justify-center">
-                      {item.category}
+                      {category?.map((cat=>{
+                        if(cat._id==item.category) return cat.name
+                      }))}
                     </div>
                   </td>
                   <td>
