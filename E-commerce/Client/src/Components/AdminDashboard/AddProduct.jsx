@@ -4,7 +4,7 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { useCategory } from '../../Contexts/CategoryContext';
 
 function AddProduct() {
-    const category  = useCategory()
+    const category = useCategory()
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -146,6 +146,7 @@ function AddProduct() {
                                 required
                             />
                         </div>
+                        <button type="submit" className="mt-4 px-4 w-32 py-2 bg-blue-600 text-white rounded-md">Add</button>
                     </div>
 
                     <div className="w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden items-center">
@@ -160,9 +161,11 @@ function AddProduct() {
                             </label>
                         </div>
                         <img className='h-auto' src="https://img.freepik.com/free-vector/landing-page-image-upload-concept_23-2148298840.jpg?t=st=1721152175~exp=1721155775~hmac=d146e5751c60e0b82466d3c75e09443fd9069188512c4744f2918b49376266e3&w=740" alt="Upload Illustration" />
+
                     </div>
+
                 </div>
-                <button type="submit" className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md">Add</button>
+
             </form>
         </div>
     );
