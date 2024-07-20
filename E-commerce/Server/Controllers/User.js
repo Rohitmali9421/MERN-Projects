@@ -2,6 +2,7 @@ const User = require("../Models/User");
 const bcrypt = require("bcrypt");
 const { setUser } = require("../Services/Auth");
 const mongoose = require("mongoose");
+const { check, validationResult } = require("express-validator");
 async function handleSignUp(req, res) {
   try {
     const { name, email, password, image } = req.body;
@@ -22,7 +23,7 @@ async function handleSignUp(req, res) {
       name,
       email,
       password: hashedPassword,
-      profilePhoto:image,
+      profilePhoto: image,
     });
 
     const accessToken = setUser(newUser);
@@ -35,9 +36,17 @@ async function handleSignUp(req, res) {
     return res.status(500).json({ msg: error.message });
   }
 }
-
+const validateLogin = [
+  check("email", "Email is required").not().isEmpty(),
+  check("email", "Invalid email format").isEmail(),
+  check("password", "Password is required").not().isEmpty(),
+];
 async function handleLogin(req, res) {
   try {
+    const errors = validationResult(req);
+    if (errors) return res.status(400).json({ errors: errors.array() });
+    // if(!req.body.email) return res.status(400).json({error:"Email is required"})
+    // if(!req.body.password) return res.status(400).json({error:"password is required"})
     const { email, password } = req.body;
 
     const user = await User.findOne({ email: email });
@@ -69,27 +78,28 @@ async function handleAddToCart(req, res) {
   try {
     const { productId } = req.body;
     const userId = req.user.id;
-  
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(400).json({ msg: "User Not Found" });
     }
 
-    const productIndex = user.cart.findIndex(item => item.productID?.toString() === productId);
-    
+    const productIndex = user.cart.findIndex(
+      (item) => item.productID?.toString() === productId
+    );
+
     if (productIndex > -1) {
       user.cart[productIndex].quantity += 1;
     } else {
       user.cart.push({
         productID: new mongoose.Types.ObjectId(productId),
-        quantity: 1
+        quantity: 1,
       });
     }
 
     await user.save();
-    const updatedUser = await User.findById(userId).select('-password');
+    const updatedUser = await User.findById(userId).select("-password");
     return res.status(200).json(updatedUser);
-    
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
@@ -99,14 +109,16 @@ async function handleCartIncreaseQuantity(req, res) {
   try {
     const { productId } = req.body;
     const userId = req.user.id;
-  
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(400).json({ msg: "User Not Found" });
     }
 
-    const productIndex = user.cart.findIndex(item => item.productID?.toString() === productId);
-    
+    const productIndex = user.cart.findIndex(
+      (item) => item.productID?.toString() === productId
+    );
+
     if (productIndex > -1) {
       user.cart[productIndex].quantity += 1;
     } else {
@@ -114,9 +126,8 @@ async function handleCartIncreaseQuantity(req, res) {
     }
 
     await user.save();
-    const updatedUser = await User.findById(userId).select('-password');
+    const updatedUser = await User.findById(userId).select("-password");
     return res.status(200).json(updatedUser);
-    
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
@@ -125,14 +136,16 @@ async function handleCartDecreaseQuantity(req, res) {
   try {
     const { productId } = req.body;
     const userId = req.user.id;
-  
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(400).json({ msg: "User Not Found" });
     }
 
-    const productIndex = user.cart.findIndex(item => item.productID?.toString() === productId);
-    
+    const productIndex = user.cart.findIndex(
+      (item) => item.productID?.toString() === productId
+    );
+
     if (productIndex > -1) {
       user.cart[productIndex].quantity -= 1;
 
@@ -142,12 +155,11 @@ async function handleCartDecreaseQuantity(req, res) {
       }
 
       await user.save();
-      const updatedUser = await User.findById(userId).select('-password');
+      const updatedUser = await User.findById(userId).select("-password");
       return res.status(200).json(updatedUser);
     } else {
       return res.status(400).json({ msg: "Product not found in cart" });
     }
-    
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
@@ -161,9 +173,3 @@ module.exports = {
   handleCartIncreaseQuantity,
   handleCartDecreaseQuantity,
 };
-
-
-
-
-
-
