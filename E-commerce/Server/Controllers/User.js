@@ -2,63 +2,71 @@ const User = require("../Models/User");
 const bcrypt = require("bcrypt");
 const { setUser } = require("../Services/Auth");
 const mongoose = require("mongoose");
-const { check, validationResult } = require("express-validator");
-async function handleSignUp(req, res) {
+const { validationResult } = require("express-validator");
+
+
+const handleSignUp = async (req, res) => {
+  // Validate the request
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ error: errors.array()[0].msg });
+  }
+
   try {
     const { name, email, password, image } = req.body;
 
+    // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ msg: "User already exists" });
+      return res.status(400).json({ error: "User already exists" });
     }
 
-    if (password.length < 8) {
-      return res
-        .status(400)
-        .json({ msg: "Password must be at least 8 characters" });
-    }
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({
+    // Create a new user
+    const newUser = new User({
       name,
       email,
       password: hashedPassword,
-      profilePhoto: image,
+      image
     });
 
-    const accessToken = setUser(newUser);
-    const { password: _, ...userWithoutPassword } = newUser._doc; // Exclude password from the response
+    // Save the user to the database
+    await newUser.save();
 
-    return res
-      .status(200)
-      .json({ user: userWithoutPassword, token: accessToken });
+    // Generate a token or handle post-registration logic here
+    const accessToken = setUser(newUser); // Implement setUser function as per your logic
+
+    // Respond with the new user and token
+    res.status(201).json({ user: newUser, token: accessToken });
   } catch (error) {
-    return res.status(500).json({ msg: error.message });
+    console.error(error); // Log the error for internal debugging
+    res.status(500).json({ error: "Server error. Please try again later." });
   }
-}
-const validateLogin = [
-  check("email", "Email is required").not().isEmpty(),
-  check("email", "Invalid email format").isEmail(),
-  check("password", "Password is required").not().isEmpty(),
-];
+};
+
 async function handleLogin(req, res) {
   try {
     const errors = validationResult(req);
-    if (errors) return res.status(400).json({ errors: errors.array() });
-    // if(!req.body.email) return res.status(400).json({error:"Email is required"})
-    // if(!req.body.password) return res.status(400).json({error:"password is required"})
+    if (errors.array().length > 0)
+      return res.status(400).json({ error: errors.array()?.[0]?.msg });
+
     const { email, password } = req.body;
 
     const user = await User.findOne({ email: email });
-    if (!user) return res.status(400).json({ msg: "User does not exist" });
+    if (!user) return res.status(400).json({ error: "Invalid credentials" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
+    if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
 
     const accessToken = setUser(user);
     return res.status(200).json({ user: user, token: accessToken });
   } catch (error) {
-    return res.status(500).json({ msg: error.message });
+    return res
+      .status(500)
+      .json({ error: "Server error. Please try again later." });
   }
 }
 async function handleGetUser(req, res) {
