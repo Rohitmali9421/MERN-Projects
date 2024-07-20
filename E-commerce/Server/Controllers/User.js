@@ -3,55 +3,44 @@ const bcrypt = require("bcrypt");
 const { setUser } = require("../Services/Auth");
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
-
-
-const handleSignUp = async (req, res) => {
-  // Validate the request
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ error: errors.array()[0].msg });
-  }
-
+async function handleSignUp(req, res) {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0].msg });
+    }
+
     const { name, email, password, image } = req.body;
 
-    // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
-
-    // Hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create a new user
-    const newUser = new User({
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
-      image
+      profilePhoto: image,
     });
 
-    // Save the user to the database
-    await newUser.save();
+    const accessToken = setUser(newUser);
+    const { password: _, ...userWithoutPassword } = newUser._doc;
 
-    // Generate a token or handle post-registration logic here
-    const accessToken = setUser(newUser); // Implement setUser function as per your logic
-
-    // Respond with the new user and token
-    res.status(201).json({ user: newUser, token: accessToken });
+    return res
+      .status(200)
+      .json({ user: userWithoutPassword, token: accessToken });
   } catch (error) {
-    console.error(error); // Log the error for internal debugging
     res.status(500).json({ error: "Server error. Please try again later." });
   }
-};
+}
 
 async function handleLogin(req, res) {
   try {
     const errors = validationResult(req);
-    if (errors.array().length > 0)
-      return res.status(400).json({ error: errors.array()?.[0]?.msg });
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0].msg });
+    }
 
     const { email, password } = req.body;
 
@@ -78,7 +67,7 @@ async function handleGetUser(req, res) {
 
     return res.status(200).json(user);
   } catch (error) {
-    return res.status(500).json({ msg: error.message });
+    res.status(500).json({ error: "Server error. Please try again later." });
   }
 }
 
