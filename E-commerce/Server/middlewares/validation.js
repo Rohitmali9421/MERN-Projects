@@ -4,6 +4,46 @@ const validateLogin = [
   check("email", "Invalid email format").isEmail(),
   check("password", "Password is required").not().isEmpty(),
 ];
+const validateCreateProduct = [
+  check("title")
+    .not()
+    .isEmpty()
+    .withMessage("Title is required")
+    .isString()
+    .withMessage("Name must be a string")
+    .isLength({ min: 3 })
+    .withMessage("Title must be at least 3 characters long"),
+  check("description")
+    .not()
+    .isEmpty()
+    .withMessage("description is required")
+    .isString()
+    .withMessage("description must be a string")
+    .isLength({ min: 20 })
+    .withMessage("description must be at least 20 characters long"),
+  check("content")
+    .not()
+    .isEmpty()
+    .withMessage("content is required")
+    .isString()
+    .withMessage("content must be a string")
+    .isLength({ min: 20 })
+    .withMessage("content must be at least 20 characters long"),
+  check("category")
+    .not()
+    .isEmpty()
+    .withMessage("category is required")
+    .isString()
+    .withMessage("category must be a string")
+    .isLength({ min: 3 })
+    .withMessage("content must be at least 3 characters long"),
+  check("price")
+    .not()
+    .isEmpty()
+    .withMessage("Price is required")
+    .isNumeric()
+    .withMessage("Price must be a Number"),
+];
 const validateSignUp = [
   check("name")
     .not()
@@ -32,4 +72,5 @@ const validateSignUp = [
 module.exports = {
   validateLogin,
   validateSignUp,
+  validateCreateProduct,
 };

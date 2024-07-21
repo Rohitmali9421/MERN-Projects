@@ -1,7 +1,7 @@
 const Category = require("../Models/Category");
 const Product = require("../Models/Product");
-const { deleteOnCloudinary } = require("../Services/Choudinary");
-
+const { deleteOnCloudinary, uploadOnCloudinary } = require("../Services/Choudinary");
+const { validationResult } = require("express-validator");
 class APIFeatures {
   constructor(query, queryString) {
     this.query = query;
@@ -10,10 +10,13 @@ class APIFeatures {
 
   filtering() {
     const queryObj = { ...this.queryString };
-    const excludedFields = ['page', 'sort', 'limit'];
-    excludedFields.forEach(el => delete queryObj[el]);
+    const excludedFields = ["page", "sort", "limit"];
+    excludedFields.forEach((el) => delete queryObj[el]);
     let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt|regex)\b/g, match => `$${match}`);
+    queryStr = queryStr.replace(
+      /\b(gte|gt|lte|lt|regex)\b/g,
+      (match) => `$${match}`
+    );
 
     this.query.find(JSON.parse(queryStr));
     return this;
@@ -21,10 +24,10 @@ class APIFeatures {
 
   sorting() {
     if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.split(',').join(' ');
+      const sortBy = this.queryString.sort.split(",").join(" ");
       this.query = this.query.sort(sortBy);
     } else {
-      this.query = this.query.sort('-createdAt');
+      this.query = this.query.sort("-createdAt");
     }
     return this;
   }
@@ -54,27 +57,27 @@ async function handleGetProduct(req, res) {
 
 async function handleCreateProduct(req, res) {
   try {
-    const { product_id, title, price, decription, content, image, category } =
-      req.body;
-    if (!image) return res.status(400).json({ msg: "Image not uploaded" });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0].msg });
+    }
 
+    const { title, price, description, content, image, category } = req.body;
+  
     let cat = await Category.findOne({ name: category });
 
     if (!cat) {
       return res.status(400).json({ msg: "Category does not exists" });
     }
-    const product = await Product.findOne({ product_id });
-    if (product)
-      return res.status(400).json({ msg: "this product already exists" });
 
     const newproduct = await Product.create({
-      product_id,
+      
       title: title.toLowerCase(),
       price,
-      decription,
+      description,
       content,
-      images: image,
-      category:cat.id,
+      image,
+      category: cat.id,
     });
     return res.status(200).json({ msg: "Product Created", newproduct });
   } catch (error) {
