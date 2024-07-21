@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CartCard from './CartCard';
 import { useAuth } from '../../Contexts/UserContext';
+import {  useNavigate } from 'react-router-dom';
 
 
 function Cart() {
   const { auth } = useAuth();
+  const navigate=useNavigate()
+  useEffect(() => {
+    if (!auth.token) {
+      navigate('/login');
+    }
+  }, [auth.token, navigate]);
   return (
     <section className=" h-full ">
 
