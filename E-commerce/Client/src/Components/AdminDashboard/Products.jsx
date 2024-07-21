@@ -53,7 +53,7 @@ function Products() {
                     <div className="flex items-center my-3">
                       <img
                         className="w-16 rounded-sm mr-4"
-                        src={item.images.url}
+                        src={item.image.url}
                         alt={item.title}
                       />
                       <h1 className="font-medium">{item.title}</h1>

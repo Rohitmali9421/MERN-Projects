@@ -25,7 +25,7 @@ function ProductDetails() {
   return (
     <div className='w-full grid grid-cols-1 md:grid-cols-2 my-4 '>
       <div className='flex justify-center items-center'>
-        <img className='w-52 md:w-80 lg:w-96' src={product[0]?.images.url} alt="" />
+        <img className='w-52 md:w-80 lg:w-96' src={product[0]?.image.url} alt="" />
       </div>
       <div className='flex flex-col mx-8 md:mx-12 lg:mx-20 my-5 '  >
         <h1 className='font-bold my-2'>Havic HV G-92 Gamepad</h1>
