@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const signUp = async (name, email, password) => {
+  const signUp = async (name, email, password,setServerError) => {
     try {
       const response = await axios.post('http://localhost:8000/user/signup', {
         name,
@@ -67,7 +67,13 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
-      console.error('Signup failed:', error);
+      if (error.response && error.response.data && error.response.data.error) {
+        // Show server error message
+        setServerError(error.response.data.error);
+      } else {
+        // Fallback for other errors
+        setServerError('Login failed. Please try again.');
+      }
     }
   };
 
