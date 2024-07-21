@@ -26,7 +26,7 @@ function PopularProducts() {
                     <ProductCard 
                         key={product._id} 
                         id={product._id} 
-                        imageUrl={product.images.url} 
+                        imageUrl={product.image.url} 
                         title={product.title} 
                         price={product.price} 
                     />
