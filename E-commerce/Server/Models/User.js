@@ -21,7 +21,10 @@ const userSchema = mongoose.Schema(
     },
     profilePhoto: {
       type: Object,
-      required: true,
+      default:{
+        public_id:"amvfmhjviqpbmvu4txsf",
+        url:"http://res.cloudinary.com/dhturqqs5/image/upload/v1720437805/amvfmhjviqpbmvu4txsf.png"
+      }
     },
     cart: [
       {
