@@ -10,7 +10,7 @@ async function handleSignUp(req, res) {
       return res.status(400).json({ error: errors.array()[0].msg });
     }
 
-    const { name, email, password, image } = req.body;
+    const { name, email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -21,7 +21,6 @@ async function handleSignUp(req, res) {
       name,
       email,
       password: hashedPassword,
-      profilePhoto: image,
     });
 
     const accessToken = setUser(newUser);
