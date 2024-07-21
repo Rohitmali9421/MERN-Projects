@@ -5,7 +5,7 @@ const uploadMiddleware = require("../middlewares/Multer")
 const { validateLogin, validateSignUp } = require("../middlewares/validation")
 const router=express.Router()
 
-router.post("/signUp",uploadMiddleware,validateSignUp,handleSignUp)
+router.post("/signUp",validateSignUp,handleSignUp)
 router.patch("/cart",authenticateToken,handleAddToCart)
 router.patch("/cartIncrement",authenticateToken,handleCartIncreaseQuantity)
 router.patch("/cartDecrement",authenticateToken,handleCartDecreaseQuantity)
