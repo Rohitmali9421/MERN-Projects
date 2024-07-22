@@ -64,6 +64,20 @@ function Header() {
               SUPPORT
             </NavLink>
           </li>
+          {
+            auth?.user?.role === 1 && (
+              <li>
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    `${isActive ? "text-orange-500 hover:text-orange-500" : "text-gray-500"} lg:mx-4 mx-2 font-semibold hover:text-gray-700`
+                  }
+                >
+                  DASHBOARD
+                </NavLink>
+              </li>
+            )
+          }
         </ul>
         <div className='flex text-base sm:text-xl items-center'>
           <div className='flex bg-blue-50 justify-between rounded-lg focus-within:border-blue-700 border border-transparent sm:h-9 h-8 sm:w-40 w-32'>

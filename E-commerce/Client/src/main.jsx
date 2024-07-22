@@ -26,6 +26,7 @@ import Orders from './Components/AdminDashboard/Orders.jsx';
 import Coupons from './Components/AdminDashboard/Coupons.jsx';
 import AddProduct from './Components/AdminDashboard/AddProduct.jsx';
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -39,6 +40,9 @@ const router = createBrowserRouter(
         <Route path="support" element={<Support />} />
         <Route path="cart" element={<Cart />} />
       </Route>
+      {
+
+      }
       <Route path="/admin" element={<AdminDashboard />}>
         <Route path="" element={<Dashboard />} />
         <Route path="products" element={<Products />} />

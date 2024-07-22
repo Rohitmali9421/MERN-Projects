@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaBars } from "react-icons/fa";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
@@ -9,12 +9,30 @@ import { GiNotebook } from "react-icons/gi";
 import { BiSolidCoupon } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { Link, Outlet } from 'react-router-dom'
+import axios from 'axios';
 function AdminDashboard() {
+    const [admin, setadmin] = useState(0)
     const [menu, toggleMenu] = useState(false);
-
     const handleMenuToggle = () => {
         toggleMenu(!menu);
     };
+    const checkAdmin = async () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            try {
+                const response = await axios.get('http://localhost:8000/user/infor');
+                setadmin(response.data.role);
+            } catch (error) {
+                console.error('Failed to fetch user info:', error);
+            }
+        }
+    };
+    useEffect(() => {
+        checkAdmin();
+      }, []);
+    if (!admin) {
+        return (<h1>404 not found</h1>)
+    }
 
     return (
         <>
