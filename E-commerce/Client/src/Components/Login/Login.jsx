@@ -5,7 +5,7 @@ import { useAuth } from '../../Contexts/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
-  const { setAuth, auth } = useAuth();
+  const { auth,Login } = useAuth();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState('');
 
@@ -14,30 +14,7 @@ function Login() {
   // Handle form submission
   const onSubmit = async (data) => {
     const { email, password } = data;
-    try {
-      const response = await axios.post('https://mern-server-rohit.vercel.app/user/login', {
-        email,
-        password,
-      });
-
-      const { user, token } = response.data;
-
-      // Update authentication context and local storage
-      setAuth({ user, token });
-      localStorage.setItem('token', token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      // Redirect to home page or desired route
-      navigate('/');
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        // Show server error message
-        setServerError(error.response.data.error);
-      } else {
-        // Fallback for other errors
-        setServerError('Login failed. Please try again.');
-      }
-    }
+    Login(email,password,setServerError)  
   };
 
   // Redirect if user is already authenticated

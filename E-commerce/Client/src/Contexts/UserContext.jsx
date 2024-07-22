@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
     initializeAuth();
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (email, password, setServerError) => {
     try {
       const response = await axios.post('https://mern-server-rohit.vercel.app/user/login', {
         email,
@@ -51,11 +51,17 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
-      console.error('Login failed:', error);
+      if (error.response && error.response.data && error.response.data.error) {
+        // Show server error message
+        setServerError(error.response.data.error);
+      } else {
+        // Fallback for other errors
+        setServerError('Login failed. Please try again.');
+      }
     }
   };
 
-  const signUp = async (name, email, password,setServerError) => {
+  const signUp = async (name, email, password, setServerError) => {
     try {
       const response = await axios.post('https://mern-server-rohit.vercel.app/user/signup', {
         name,
