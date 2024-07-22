@@ -35,9 +35,6 @@ function AddProduct() {
         output.src = URL.createObjectURL(file);
         output.classList.remove("hidden");
         document.getElementById("imageupload").classList.add("hidden");
-        output.onload = () => {
-            URL.revokeObjectURL(output.src);
-        };
     };
 
 
