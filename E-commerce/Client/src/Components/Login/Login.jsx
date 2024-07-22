@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import { useAuth } from '../../Contexts/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
-  const { auth,Login } = useAuth();
+  const { auth,login } = useAuth();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState('');
 
@@ -14,11 +13,11 @@ function Login() {
   // Handle form submission
   const onSubmit = async (data) => {
     const { email, password } = data;
-    Login(email,password,setServerError)  
+    login(email,password,setServerError)  
   };
 
   // Redirect if user is already authenticated
-  if (auth.token) {
+  if (auth?.token) {
     navigate('/');
     return null;
   }
