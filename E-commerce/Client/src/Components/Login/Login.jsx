@@ -15,7 +15,7 @@ function Login() {
   const onSubmit = async (data) => {
     const { email, password } = data;
     try {
-      const response = await axios.post('http://localhost:8000/user/login', {
+      const response = await axios.post('https://mern-server-rohit.vercel.app/user/login', {
         email,
         password,
       });

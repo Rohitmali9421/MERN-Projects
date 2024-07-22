@@ -10,7 +10,7 @@ function AddProduct() {
     const addProduct = async (data) => {
         const { title, price, description, content,category } = data
         try {
-            const response = await axios.post('http://localhost:8000/api/products', {
+            const response = await axios.post('https://mern-server-rohit.vercel.app/api/products', {
                 title,
                 price,
                 description,

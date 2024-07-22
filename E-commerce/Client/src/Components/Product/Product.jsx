@@ -7,7 +7,7 @@ function Product() {
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/products');
+            const response = await axios.get('https://mern-server-rohit.vercel.app/api/products');
             setPopularProduct(response.data);
         } catch (error) {
             console.error('Failed to fetch Popular Products info:', error);

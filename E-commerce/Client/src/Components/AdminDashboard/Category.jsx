@@ -21,7 +21,7 @@ function Category() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/category');
+      const response = await axios.get('https://mern-server-rohit.vercel.app/api/category');
       setCategories(response.data);
     } catch (error) {
       console.error('Failed to fetch categories:', error);

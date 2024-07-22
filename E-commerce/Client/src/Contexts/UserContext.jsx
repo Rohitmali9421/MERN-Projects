@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
 
   const addToCart = async (id) => {
     try {
-      await axios.patch('http://localhost:8000/user/cart', {
+      await axios.patch('https://mern-server-rohit.vercel.app/user/cart', {
         productId: id
       });
       toast.success("Added to cart");
@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:8000/user/login', {
+      const response = await axios.post('https://mern-server-rohit.vercel.app/user/login', {
         email,
         password,
       });
@@ -57,7 +57,7 @@ const AuthProvider = ({ children }) => {
 
   const signUp = async (name, email, password,setServerError) => {
     try {
-      const response = await axios.post('http://localhost:8000/user/signup', {
+      const response = await axios.post('https://mern-server-rohit.vercel.app/user/signup', {
         name,
         email,
         password,
