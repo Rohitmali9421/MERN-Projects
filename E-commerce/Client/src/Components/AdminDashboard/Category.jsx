@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaCloudUploadAlt, FaRegEdit } from 'react-icons/fa';
+import { FaCloudUploadAlt } from 'react-icons/fa';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { IoSearch } from 'react-icons/io5';
 import axios from 'axios';
@@ -21,7 +21,7 @@ function Category() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('/api/category');
+      const response = await axios.get('http://localhost:8000/api/category');
       setCategories(response.data);
     } catch (error) {
       console.error('Failed to fetch categories:', error);
@@ -33,7 +33,7 @@ function Category() {
     formData.append('name', newCategory.name);
     formData.append('image', newCategory.image);
     try {
-      await axios.post('/api/category', formData, {
+      await axios.post('http://localhost:8000/api/category', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
