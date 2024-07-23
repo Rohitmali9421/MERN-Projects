@@ -21,7 +21,7 @@ function Category() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('https://mern-server-rohit.vercel.app/api/category');
+      const response = await axios.get('/api/category');
       setCategories(response.data);
     } catch (error) {
       console.error('Failed to fetch categories:', error);
@@ -33,7 +33,7 @@ function Category() {
     formData.append('name', newCategory.name);
     formData.append('image', newCategory.image);
     try {
-      await axios.post('http://localhost:8000/api/category', formData, {
+      await axios.post('/api/category', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

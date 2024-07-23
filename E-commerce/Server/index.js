@@ -16,13 +16,6 @@ const app = express();
 connectMongoDB(URI);
 
 //Middlerwares
-app.use(
-  cors({
-    origin: ["https://peekmart.vercel.app"],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  })
-);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

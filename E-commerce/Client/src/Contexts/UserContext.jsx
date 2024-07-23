@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
     if (token) {
       try {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const response = await axios.get('http://localhost:8000/user/infor');
+        const response = await axios.get('/user/infor');
         setAuth({ user: response.data, token });
       } catch (error) {
         console.error('Failed to fetch user info:', error);
@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
 
   const addToCart = async (id) => {
     try {
-      await axios.patch('https://mern-server-rohit.vercel.app/user/cart', {
+      await axios.patch('/user/cart', {
         productId: id
       });
       toast.success("Added to cart");
@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password, setServerError) => {
     try {
-      const response = await axios.post('https://mern-server-rohit.vercel.app/user/login', {
+      const response = await axios.post('/user/login', {
         email,
         password,
       });
@@ -52,10 +52,8 @@ const AuthProvider = ({ children }) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
-        // Show server error message
         setServerError(error.response.data.error);
       } else {
-        // Fallback for other errors
         setServerError('Login failed. Please try again.');
       }
     }
@@ -63,7 +61,7 @@ const AuthProvider = ({ children }) => {
 
   const signUp = async (name, email, password, setServerError) => {
     try {
-      const response = await axios.post('https://mern-server-rohit.vercel.app/user/signup', {
+      const response = await axios.post('/user/signup', {
         name,
         email,
         password,

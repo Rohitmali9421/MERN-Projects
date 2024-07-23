@@ -20,7 +20,7 @@ function AdminDashboard() {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                const response = await axios.get('https://mern-server-rohit.vercel.app/user/infor');
+                const response = await axios.get('/user/infor');
                 setadmin(response.data.role);
             } catch (error) {
                 console.error('Failed to fetch user info:', error);

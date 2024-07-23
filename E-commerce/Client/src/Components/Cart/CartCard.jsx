@@ -6,7 +6,7 @@ function CartCard({ quantity, productID }) {
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`https://mern-server-rohit.vercel.app/api/products?_id=${productID}`);
+      const response = await axios.get(`/api/products?_id=${productID}`);
       setProduct(response.data[0]);
       console.log(response.data[0]);
     } catch (error) {

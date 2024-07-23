@@ -9,7 +9,7 @@ const CategoryProvider = ({ children }) => {
     const fetchCategory = async () => {
 
         try {
-            const response = await axios.get('https://mern-server-rohit.vercel.app/api/category');
+            const response = await axios.get('/api/category');
             setCategory(  response.data );
         } catch (error) {
             console.error('Failed to fetch Catagory info:', error);
