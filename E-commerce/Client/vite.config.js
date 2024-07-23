@@ -7,6 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api':'https://mern-server-rohit.vercel.app/',
+      changeOrigin: true,
+      pathRewrite: { '^/api': '' },
     },
   },
 })
