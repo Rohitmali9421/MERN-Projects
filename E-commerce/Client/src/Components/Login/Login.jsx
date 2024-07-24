@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../Contexts/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
-  const { auth,login } = useAuth();
+  const { auth, login } = useAuth();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState('');
 
@@ -13,14 +13,17 @@ function Login() {
   // Handle form submission
   const onSubmit = async (data) => {
     const { email, password } = data;
-    login(email,password,setServerError)  
+    login(email, password, setServerError);
   };
 
   // Redirect if user is already authenticated
-  if (auth?.token) {
-    navigate('/');
-    return null;
-  }
+  useEffect(() => {
+    if (auth?.token) {
+      navigate('/');
+    }
+  }, [auth, navigate]);
+
+
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">

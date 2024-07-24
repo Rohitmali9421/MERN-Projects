@@ -8,7 +8,6 @@ function CartCard({ quantity, productID }) {
     try {
       const response = await axios.get(`http://localhost:8000/api/products?_id=${productID}`);
       setProduct(response.data[0]);
-      console.log(response.data[0]);
     } catch (error) {
       console.error('Failed to fetch product info:', error);
     }
@@ -25,7 +24,7 @@ function CartCard({ quantity, productID }) {
   return (
     <div className="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group">
       <div className="w-full md:max-w-[126px]">
-        <img src={product.images?.url} alt="Product" className="mx-auto" />
+        <img src={product.image?.url} alt="Product" className="mx-auto" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 w-full">
         <div className="md:col-span-2">

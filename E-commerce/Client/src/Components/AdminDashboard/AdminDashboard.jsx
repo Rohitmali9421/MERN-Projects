@@ -8,93 +8,105 @@ import { LiaCreativeCommonsSampling } from "react-icons/lia";
 import { GiNotebook } from "react-icons/gi";
 import { BiSolidCoupon } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom';
 import axios from 'axios';
+
 function AdminDashboard() {
-    const [admin, setadmin] = useState(0)
+    const [admin, setAdmin] = useState(0);
     const [menu, toggleMenu] = useState(false);
+    const [loader, setLoader] = useState(true);
+
     const handleMenuToggle = () => {
         toggleMenu(!menu);
     };
+
     const checkAdmin = async () => {
         const token = localStorage.getItem('token');
         if (token) {
             try {
-                const response = await axios.get('http://localhost:8000/user/infor');
-                setadmin(response.data.role);
+                const response = await axios.get('http://localhost:8000/user/infor', {
+                });
+                setAdmin(response.data.role);
             } catch (error) {
                 console.error('Failed to fetch user info:', error);
             }
         }
+        setLoader(false);
     };
+
     useEffect(() => {
         checkAdmin();
-      }, []);
+    }, []);
+
+    if (loader) {
+        return (
+            <div className='w-full h-screen flex items-center justify-center'>
+                <div className="w-24 h-24 border-8 border-dashed rounded-full animate-spin border-blue-600"></div>
+            </div>
+        );
+    }
+
     if (!admin) {
-        return (<h1>404 not found</h1>)
+        return (<h1>404 not found</h1>);
     }
 
     return (
         <>
-
             <div className={`${menu ? "" : "-translate-x-full"} fixed top-0 left-0 z-40 w-64 h-screen transition-transform md:translate-x-0 bg-white`}>
-                <div className='px-4 flex justify-between  items-center h-20 border-b'>
+                <div className='px-4 flex justify-between items-center h-20 border-b'>
                     <Link to="/">
-                        <div className='flex items-center '>
+                        <div className='flex items-center'>
                             <LiaCreativeCommonsSampling className='mr-2 text-3xl text-blue-500' />
-                            <h1 className='font-bold text-2xl  text-blue-500'>PeekMart</h1>
+                            <h1 className='font-bold text-2xl text-blue-500'>PeekMart</h1>
                         </div>
                     </Link>
                     <IoIosArrowDropleftCircle className='md:hidden block text-blue-500 text-xl' onClick={handleMenuToggle} />
                 </div>
-                <div className=' flex flex-col justify-between px-4 h-full'>
+                <div className='flex flex-col justify-between px-4 h-full'>
                     <ul>
                         <Link to="/admin">
-                            <li className='flex items-center my-3 bg-transparent  hover:bg-blue-50 rounded-md px-4 py-2'>
+                            <li className='flex items-center my-3 bg-transparent hover:bg-blue-50 rounded-md px-4 py-2'>
                                 <MdDashboard className='text-xl text-blue-500 mr-3' />
                                 <h1 className='font-bold'>Dashboard</h1>
                             </li>
                         </Link>
-                        <Link to="/admin/products" >
+                        <Link to="/admin/products">
                             <li className='flex items-center my-3 hover:bg-blue-50 rounded-md px-4 py-2'>
                                 <FaBoxOpen className='text-xl text-blue-500 mr-3' />
                                 <h1 className='font-bold'>Products</h1>
                             </li>
-                        </Link >
+                        </Link>
                         <Link to="/admin/category">
                             <li className='flex items-center my-3 hover:bg-blue-50 rounded-md px-4 py-2'>
                                 <IoMdCart className='text-xl text-blue-500 mr-3' />
                                 <h1 className='font-bold'>Category</h1>
                             </li>
-                        </Link >
-                        <Link to="/admin/orders" >
+                        </Link>
+                        <Link to="/admin/orders">
                             <li className='flex items-center my-3 hover:bg-blue-50 rounded-md px-4 py-2'>
                                 <GiNotebook className='text-xl text-blue-500 mr-3' />
                                 <h1 className='font-bold'>Orders</h1>
                             </li>
-                        </Link >
-                        <Link to="/admin/coupons" >
+                        </Link>
+                        <Link to="/admin/coupons">
                             <li className='flex items-center my-3 hover:bg-blue-50 rounded-md px-4 py-2'>
                                 <BiSolidCoupon className='text-xl text-blue-500 mr-3' />
                                 <h1 className='font-bold'>Coupons</h1>
                             </li>
-                        </Link >
+                        </Link>
                     </ul>
-                    <ul className='mb-32 '>
+                    <ul className='mb-32'>
                         <li className='flex items-center my-3 hover:bg-blue-50 rounded-md px-4 py-2'>
                             <BiLogOut className='text-xl text-red-600 mr-3' />
                             <h1 className='font-bold'>Logout</h1>
                         </li>
-
                     </ul>
-
                 </div>
-
             </div>
 
-            <div className="w-full  bg-blue-50 md:pl-64">
+            <div className="w-full bg-blue-50 md:pl-64">
                 <nav className='w-full h-20 bg-white border'>
-                    <FaBars className='md:hidden block ' onClick={handleMenuToggle} />
+                    <FaBars className='md:hidden block' onClick={handleMenuToggle} />
                 </nav>
                 <Outlet />
             </div>

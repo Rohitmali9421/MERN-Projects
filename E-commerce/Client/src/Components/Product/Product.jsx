@@ -20,13 +20,10 @@ function Product() {
 
     if (!popularProduct) {
         return (
-            <div className='w-full h-screen flex justify-center items-center'>
-                <div className="flex flex-row gap-2">
-                    <div className="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]"></div>
-                    <div className="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]"></div>
-                    <div className="w-4 h-4 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]"></div>
-                </div>
-            </div>)
+            <div className='w-full h-screen flex items-center justify-center'>
+                <div class="w-24 h-24 border-8 border-dashed rounded-full animate-spin border-blue-600"></div>
+            </div>
+        )
     }
     return (
         <div className="bg-white pt-4 pb-10 flex flex-col items-center ">

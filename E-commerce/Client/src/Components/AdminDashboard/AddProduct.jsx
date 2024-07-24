@@ -6,11 +6,13 @@ import { useForm } from "react-hook-form"
 function AddProduct() {
     const category = useCategory()
     const [image, setImage] = useState(null)
-    const { handleSubmit, register, formState: { errors } } = useForm()
+    const { handleSubmit, register, formState: { errors },reset } = useForm()
+    const [loder,setloder]=useState(false)
     const addProduct = async (data) => {
+        setloder(true)
         const { title, price, description, content,category } = data
         try {
-            const response = await axios.post('http://localhost:8000/api/products', {
+            await axios.post('http://localhost:8000/api/products', {
                 title,
                 price,
                 description,
@@ -22,8 +24,12 @@ function AddProduct() {
                     'Content-Type': 'multipart/form-data',
                 },
             })
+            reset()
+            setImage(null)
+            setloder(false)
         } catch (error) {
             console.error('Failed to fetch Catagory info:', error);
+            setloder(false)
         }
 
     };
@@ -37,7 +43,13 @@ function AddProduct() {
         document.getElementById("imageupload").classList.add("hidden");
     };
 
-
+    if (loder==true) {
+        return (
+            <div className='w-full h-screen flex items-center justify-center'>
+                <div className="w-24 h-24 border-8 border-dashed rounded-full animate-spin border-blue-600"></div>
+            </div>
+        )
+    }
     return (
         <div className='w-full p-6'>
             <h1 className='font-semibold text-3xl my-2'>Add Product</h1>
