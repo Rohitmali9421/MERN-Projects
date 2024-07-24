@@ -30,9 +30,10 @@ const AuthProvider = ({ children }) => {
         productId: id
       });
       toast.success("Added to cart");
-      initializeAuth()
+      initializeAuth();
     } catch (error) {
       console.error('Failed to add to cart:', error);
+      toast.error('Failed to add to cart.');
     }
   };
 
@@ -50,12 +51,11 @@ const AuthProvider = ({ children }) => {
       setAuth({ user, token });
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      toast.success('Login successful.');
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        setServerError(error.response.data.error);
-      } else {
-        setServerError('Login failed. Please try again.');
-      }
+      const errorMessage = error.response?.data?.error || 'Login failed. Please try again.';
+      setServerError(errorMessage);
+
     }
   };
 
@@ -70,14 +70,11 @@ const AuthProvider = ({ children }) => {
       setAuth({ user, token });
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      toast.success('Sign up successful.');
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        // Show server error message
-        setServerError(error.response.data.error);
-      } else {
-        // Fallback for other errors
-        setServerError('Login failed. Please try again.');
-      }
+      const errorMessage = error.response?.data?.error || 'Sign up failed. Please try again.';
+      setServerError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
@@ -85,6 +82,7 @@ const AuthProvider = ({ children }) => {
     setAuth({ user: null, token: null });
     localStorage.removeItem('token');
     delete axios.defaults.headers.common['Authorization'];
+    toast.success('Logged out successfully.');
   };
 
   return (
@@ -96,8 +94,6 @@ const AuthProvider = ({ children }) => {
 
 export default AuthProvider;
 
-const useAuth = () => {
+export const useAuth = () => {
   return useContext(AuthContext);
 };
-
-export { useAuth };
