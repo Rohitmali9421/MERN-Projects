@@ -10,19 +10,21 @@ import { BiSolidCoupon } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { Link, Outlet } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../../Contexts/UserContext';
 
 function AdminDashboard() {
     const [admin, setAdmin] = useState(0);
     const [menu, toggleMenu] = useState(false);
     const [loader, setLoader] = useState(true);
+    const { auth } = useAuth();
 
     const handleMenuToggle = () => {
         toggleMenu(!menu);
     };
 
     const checkAdmin = async () => {
-        const token = localStorage.getItem('token');
-        if (token) {
+         
+        if (auth?.token) {
             try {
                 const response = await axios.get('http://localhost:8000/user/infor', {
                 });
@@ -36,7 +38,7 @@ function AdminDashboard() {
 
     useEffect(() => {
         checkAdmin();
-    }, []);
+    }, [auth]);
 
     if (loader) {
         return (

@@ -6,11 +6,11 @@ import { useForm } from "react-hook-form"
 function AddProduct() {
     const category = useCategory()
     const [image, setImage] = useState(null)
-    const { handleSubmit, register, formState: { errors },reset } = useForm()
-    const [loder,setloder]=useState(false)
+    const { handleSubmit, register, formState: { errors }, reset } = useForm()
+    const [loder, setloder] = useState(false)
     const addProduct = async (data) => {
         setloder(true)
-        const { title, price, description, content,category } = data
+        const { title, price, description, content, category } = data
         try {
             await axios.post('http://localhost:8000/api/products', {
                 title,
@@ -43,7 +43,7 @@ function AddProduct() {
         document.getElementById("imageupload").classList.add("hidden");
     };
 
-    if (loder==true) {
+    if (loder == true) {
         return (
             <div className='w-full h-screen flex items-center justify-center'>
                 <div className="w-24 h-24 border-8 border-dashed rounded-full animate-spin border-blue-600"></div>
@@ -163,8 +163,9 @@ function AddProduct() {
                                 </div>
                                 <img id="preview_img" className="mx-auto hidden" alt="Image Preview" />
                             </label>
+                            {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image.message}</p>}
                         </div>
-                        {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image.message}</p>}
+
                         <img className='h-auto' src="https://img.freepik.com/free-vector/landing-page-image-upload-concept_23-2148298840.jpg?t=st=1721152175~exp=1721155775~hmac=d146e5751c60e0b82466d3c75e09443fd9069188512c4744f2918b49376266e3&w=740" alt="Upload Illustration" />
                     </div>
 
