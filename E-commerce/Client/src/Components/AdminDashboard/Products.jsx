@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoSearch } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useCategory } from '../../Contexts/CategoryContext';
 function Products() {
   const [Product, setProduct] = useState(null);
- const category=useCategory()
+  const category = useCategory()
 
   const fetchProducts = async () => {
     try {
@@ -31,9 +31,9 @@ function Products() {
             <input className='outline-none text-xs md:px-2 px-1 w-24 sm:w-full' type="text" placeholder='Search By Product Name' />
           </div>
           <Link to="/admin/products/add" >
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 md:py-3  px-2 rounded text-xs w-28">
-            + Add Product
-          </button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 md:py-3  px-2 rounded text-xs w-28">
+              + Add Product
+            </button>
           </Link>
         </div>
         <div className='w-full py-6 overflow-x-scroll'>
@@ -66,8 +66,8 @@ function Products() {
                   </td>
                   <td>
                     <div className="flex items-center my-3 justify-center">
-                      {category?.map((cat=>{
-                        if(cat._id==item.category) return cat.name
+                      {category?.map((cat => {
+                        if (cat._id == item.category) return cat.name
                       }))}
                     </div>
                   </td>
