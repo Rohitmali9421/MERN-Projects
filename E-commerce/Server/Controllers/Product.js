@@ -79,7 +79,7 @@ async function handleCreateProduct(req, res) {
       image,
       category: cat.id,
     });
-    return res.status(200).json({ msg: "Product Created", newproduct });
+    return res.status(200).json({ msg: "Product Added", newproduct });
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
@@ -88,9 +88,9 @@ async function handleDeleteProduct(req, res) {
   try {
     const productID = req.params.id;
     const product = await Product.findById(productID);
-    deleteOnCloudinary(product.images.public_id);
+    deleteOnCloudinary(product.image.public_id);
     await Product.findByIdAndDelete(productID);
-    return res.json({ msg: "delete" });
+    return res.json({ msg: "deleted successfully" });
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }

@@ -1,5 +1,5 @@
 const Category = require("../Models/Category");
-
+const Product = require("../Models/Product");
 async function handleGetCategory(req, res) {
   try {
     const category = await Category.find();
@@ -10,7 +10,7 @@ async function handleGetCategory(req, res) {
 }
 async function handleCreateCategory(req, res) {
   try {
-    const { name,image } = req.body;
+    const { name, image } = req.body;
     if (!image) return res.status(400).json({ msg: "Image not uploaded" });
     const category = await Category.findOne({ name });
     if (category)
@@ -18,9 +18,9 @@ async function handleCreateCategory(req, res) {
 
     const newCategory = await Category.create({
       name: name,
-      imageURL:image,
+      imageURL: image,
     });
-    return res.json({ msg: "Category Created",newCategory });
+    return res.json({ msg: "Category Created", newCategory });
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
@@ -28,7 +28,9 @@ async function handleCreateCategory(req, res) {
 
 async function handleDeleteCategory(req, res) {
   try {
+    await Product.deleteMany({category:req.params.id});
     await Category.findByIdAndDelete(req.params.id);
+
     return res.json({ msg: "Category Deleted" });
   } catch (error) {
     return res.status(500).json({ msg: error.message });
