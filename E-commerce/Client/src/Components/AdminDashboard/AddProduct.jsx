@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useCategory } from '../../Contexts/CategoryContext';
 import { useForm } from "react-hook-form"
+import { toast } from 'react-toastify';
 function AddProduct() {
-    const category = useCategory()
+    const {category} = useCategory()
     const [image, setImage] = useState(null)
     const { handleSubmit, register, formState: { errors }, reset } = useForm()
     const [loder, setloder] = useState(false)
@@ -12,7 +13,7 @@ function AddProduct() {
         setloder(true)
         const { title, price, description, content, category } = data
         try {
-            await axios.post('http://localhost:8000/api/products', {
+            const response=await axios.post('http://localhost:8000/api/products', {
                 title,
                 price,
                 description,
@@ -24,6 +25,7 @@ function AddProduct() {
                     'Content-Type': 'multipart/form-data',
                 },
             })
+            toast.success(response?.data?.msg);
             reset()
             setImage(null)
             setloder(false)
