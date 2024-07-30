@@ -6,16 +6,14 @@ import { FaRegEdit } from "react-icons/fa";
 import axios from 'axios';
 import { useCategory } from '../../Contexts/CategoryContext';
 import { TiWarning } from "react-icons/ti";
-
+import { toast } from 'react-toastify';
 function Products() {
   const [loder, setloder] = useState(false)
   const [Product, setProduct] = useState(null);
   const category = useCategory()
   const [popup, setPopup] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState(null);
-  const deleteProduct = async () => {
-    //Implement it after time
-  };
+  
   const fetchProducts = async () => {
     try {
       setloder(true)
@@ -27,17 +25,30 @@ function Products() {
       setloder(false)
     }
   };
+  const deleteProduct = async () => {
+    try {
+      setPopup(false)
+      setloder(true)
+      const response = await axios.delete('http://localhost:8000/api/products/' + deleteProductId);
+      fetchProducts()
+      toast.success(response?.data?.msg);
+      setloder(false)
+    } catch (error) {
+      console.error('Failed to fetch delete Products info:', error);
+      setloder(false)
+    }
+  };
 
   useEffect(() => {
     fetchProducts();
   }, []);
   if (loder == true) {
     return (
-        <div className='w-full h-screen flex items-center justify-center'>
-            <div className="w-24 h-24 border-8 border-dashed rounded-full animate-spin border-blue-600"></div>
-        </div>
+      <div className='w-full h-screen flex items-center justify-center'>
+        <div className="w-24 h-24 border-8 border-dashed rounded-full animate-spin border-blue-600"></div>
+      </div>
     )
-}
+  }
   return (
     <div className='w-full  p-6'>
       <div className={popup ? `w-screen h-screen fixed left-0 z-50 top-0 flex justify-center items-center` : `hidden`}>
