@@ -27,7 +27,7 @@ function CustomNextArrow(props) {
 }
 
 function Category() {
-    const category = useCategory();
+    const {category} = useCategory();
     var settings = {
         dots: true,
         infinite: true,
