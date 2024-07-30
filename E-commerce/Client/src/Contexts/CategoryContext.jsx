@@ -23,7 +23,7 @@ const CategoryProvider = ({ children }) => {
 
 
     return (
-        <CategoryContext.Provider value={ category }>
+        <CategoryContext.Provider value={ {category,fetchCategory} }>
             {children}
         </CategoryContext.Provider>
     );
