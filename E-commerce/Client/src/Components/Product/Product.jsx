@@ -21,7 +21,7 @@ function Product() {
     if (!popularProduct) {
         return (
             <div className='w-full h-screen flex items-center justify-center'>
-                <div class="w-24 h-24 border-8 border-dashed rounded-full animate-spin border-blue-600"></div>
+                <div className="w-24 h-24 border-8 border-dashed rounded-full animate-spin border-blue-600"></div>
             </div>
         )
     }
