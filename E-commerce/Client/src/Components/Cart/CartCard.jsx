@@ -30,7 +30,7 @@ function CartCard({ quantity, productID }) {
         <div className="md:col-span-2">
           <div className="flex flex-col max-[500px]:items-center gap-3">
             <h6 className="font-semibold text-base leading-7 text-black">{product.title}</h6>
-            <h6 className="font-normal text-base leading-7 text-gray-500">{product.content}</h6>
+            <h6 className="font-normal text-base leading-7 text-gray-500">{product.description}</h6>
             <h6 className="font-medium text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-indigo-600">
               ${product.price}
             </h6>
