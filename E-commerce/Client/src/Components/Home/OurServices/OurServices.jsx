@@ -9,19 +9,22 @@ function OurServices() {
 
                 <ServiceCard
                     serviceTitle="Order Online"
-                    serviceDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+                    serviceDescription="Conveniently place your orders online. Browse our menu, select your items, and order from the comfort of your home."
                     imageUrl="https://res.cloudinary.com/dhturqqs5/image/upload/v1720344215/Ecommerce-MERN/UI%20Items/Homepage/rmupoehltpkqdoqlpvao.png"
                 />
+
                 <ServiceCard
-                    serviceTitle="Fast delivery"
-                    serviceDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+                    serviceTitle="Fast Delivery"
+                    serviceDescription="Get your orders delivered quickly and efficiently. We ensure timely delivery to your doorstep."
                     imageUrl="https://res.cloudinary.com/dhturqqs5/image/upload/v1720344217/Ecommerce-MERN/UI%20Items/Homepage/hwca1xwbw0xrq9v0lmob.png"
                 />
+
                 <ServiceCard
                     serviceTitle="Takeaway"
-                    serviceDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+                    serviceDescription="Enjoy our delicious meals on the go. Order online and pick up your meal at your convenience."
                     imageUrl="https://res.cloudinary.com/dhturqqs5/image/upload/v1720345821/Ecommerce-MERN/UI%20Items/Homepage/nnlz1lsznwkg4hozpvuf.png"
                 />
+
             </div>
         </div>
     )
