@@ -9,7 +9,7 @@ function ProductDetails() {
   const fetchProducts = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/products?_id=' + id);
-      setProduct(response.data);
+      setProduct(response.data?.[0]);
     } catch (error) {
       console.error('Failed to fetch Popular Products info:', error);
     }
@@ -25,12 +25,12 @@ function ProductDetails() {
   return (
     <div className='w-full grid grid-cols-1 md:grid-cols-2 my-4 '>
       <div className='flex justify-center items-center'>
-        <img className='w-52 md:w-80 lg:w-96' src={product[0]?.image.url} alt="" />
+        <img className='w-52 md:w-80 lg:w-96' src={product?.image?.url} alt="" />
       </div>
       <div className='flex flex-col mx-8 md:mx-12 lg:mx-20 my-5 '  >
-        <h1 className='font-bold my-2'>Havic HV G-92 Gamepad</h1>
-        <h1 className='font-semibold'>$192.00</h1>
-        <p className='text-sm '>PlayStation 5 Controller Skin High quality vinyl with air channel adhesive for easy bubble free install & mess free removal Pressure sensitive.</p>
+        <h1 className='font-bold my-2'>{product?.title}</h1>
+        <h1 className='font-semibold'>₹{product?.price}</h1>
+        <p className='text-sm '>{product?.description}</p>
 
         <button onClick={handleaddToCart} className="text-white   hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5  my-4  bg-blue-700 focus:outline-none ">Add To cart</button>
 
