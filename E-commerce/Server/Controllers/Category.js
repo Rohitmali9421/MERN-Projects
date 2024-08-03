@@ -10,12 +10,12 @@ async function handleGetCategory(req, res) {
 }
 async function handleCreateCategory(req, res) {
   try {
-    const { name, image } = req.body;
+    const { name, imagePath } = req.body;
     if (!image) return res.status(400).json({ msg: "Image not uploaded" });
     const category = await Category.findOne({ name });
     if (category)
       return res.status(400).json({ msg: "Category Already Exists" });
-
+    const image = await uploadOnCloudinary(imagePath);
     const newCategory = await Category.create({
       name: name,
       imageURL: image,
@@ -28,7 +28,7 @@ async function handleCreateCategory(req, res) {
 
 async function handleDeleteCategory(req, res) {
   try {
-    await Product.deleteMany({category:req.params.id});
+    await Product.deleteMany({ category: req.params.id });
     await Category.findByIdAndDelete(req.params.id);
 
     return res.json({ msg: "Category Deleted" });

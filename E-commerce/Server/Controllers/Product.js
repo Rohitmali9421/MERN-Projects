@@ -1,6 +1,9 @@
 const Category = require("../Models/Category");
 const Product = require("../Models/Product");
-const { deleteOnCloudinary, uploadOnCloudinary } = require("../Services/Choudinary");
+const {
+  deleteOnCloudinary,
+  uploadOnCloudinary,
+} = require("../Services/Choudinary");
 const { validationResult } = require("express-validator");
 class APIFeatures {
   constructor(query, queryString) {
@@ -49,7 +52,7 @@ async function handleGetProduct(req, res) {
       .sorting()
       .pagination();
     const products = await features.query;
-    return res.json(products);
+    return res.status(200).json(products);
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
@@ -62,17 +65,17 @@ async function handleCreateProduct(req, res) {
       return res.status(400).json({ error: errors.array()[0].msg });
     }
 
-    const { title, price, description, content, image, category } = req.body;
-  
+    const { title, price, description, content, imagePath, category } =
+      req.body;
+
     let cat = await Category.findOne({ name: category });
 
     if (!cat) {
       return res.status(400).json({ msg: "Category does not exists" });
     }
-
+    const image = await uploadOnCloudinary(req.file.path);
     const newproduct = await Product.create({
-      
-      title: title.toLowerCase(),
+      title: title,
       price,
       description,
       content,
@@ -84,6 +87,7 @@ async function handleCreateProduct(req, res) {
     return res.status(500).json({ msg: error.message });
   }
 }
+
 async function handleDeleteProduct(req, res) {
   try {
     const productID = req.params.id;
