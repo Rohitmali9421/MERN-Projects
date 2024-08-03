@@ -21,8 +21,7 @@ function uploadMiddleware(req, res, next) {
     if (!req.file) {
       return res.status(400).json({ error: "Image is required"});
     }
-    const response = await uploadOnCloudinary(req.file.path);
-    req.body.image = response;
+    req.body.imagePath = req.file.path;
     next();
   });
 }

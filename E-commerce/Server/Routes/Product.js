@@ -12,8 +12,8 @@ const uploadMiddleware = require("../middlewares/Multer");
 router
   .route("/products")
   .get(handleGetProduct)
-  .post(uploadMiddleware,validateCreateProduct,handleCreateProduct)
-  
+  .post(uploadMiddleware, validateCreateProduct, handleCreateProduct);
+
 router
   .route("/products/:id")
   .delete(handleDeleteProduct)
