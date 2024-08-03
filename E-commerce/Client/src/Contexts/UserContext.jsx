@@ -24,6 +24,10 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    initializeAuth();
+  }, []);
+
   const addToCart = async (id) => {
     try {
       await axios.patch('http://localhost:8000/user/cart', {
@@ -37,9 +41,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    initializeAuth();
-  }, []);
+
 
   const login = async (email, password, setServerError) => {
     try {
