@@ -1,22 +1,51 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import CartCard from './CartCard';
 import { useAuth } from '../../Contexts/UserContext';
-import {  useNavigate } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import OrderSummary from './OrderSummary';
 
 function Cart() {
   const { auth } = useAuth();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+
   useEffect(() => {
     if (!auth.token) {
       navigate('/login');
     }
   }, [auth.token, navigate]);
-  return (
-    <section className=" h-full ">
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const productRequests = auth.user.cart.map(item =>
+          axios.get(`http://localhost:8000/api/products?_id=${item.productID}`)
+        );
+        const responses = await Promise.all(productRequests);
+        const fetchedProducts = responses.map(response => response.data[0]);
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error('Failed to fetch product info:', error);
+      }
+    };
+
+    if (auth?.user?.cart) {
+      fetchProducts();
+    }
+  }, [auth]);
+
+  const getTotal = () => {
+    return auth?.user?.cart?.reduce((total, item, index) => {
+      const product = products[index];
+      return total + (product ? product.price * item.quantity : 0);
+    }, 0);
+  };
+
+  return (
+    <section className="h-full">
       <div className="grid grid-cols-12 md:px-8">
-        <div className="col-span-12 xl:col-span-8 px-3  w-full max-xl:max-w-3xl max-xl:mx-auto">
+        <div className="col-span-12 xl:col-span-8 px-3 w-full max-xl:max-w-3xl max-xl:mx-auto">
           <div className="grid grid-cols-12 mt-8 max-md:hidden pb-6 border-b border-gray-200">
             <div className="col-span-12 md:col-span-7">
               <p className="font-normal text-lg leading-8 text-gray-400">Product Details</p>
@@ -33,38 +62,17 @@ function Cart() {
             </div>
           </div>
           {auth?.user?.cart?.map((item) => (
-            
-            <CartCard key={item.productID} quantity={item.quantity} productID={item.productID} />
+            <CartCard
+              key={item.productID}
+              quantity={item.quantity}
+              productID={item.productID}
+            />
           ))}
-
-
         </div>
-        <div
-          className="p-4 col-span-12 xl:col-span-4 bg-gray-50 w-full max-xl:px-6 max-w-3xl xl:max-w-lg mx-auto lg:pl-8 ">
-          <h2 className="font-manrope font-bold text-3xl leading-10 text-black py-8  border-b border-gray-300">
-            Order Summary</h2>
-          <div className="mt-8">
-            <div className="flex items-center justify-between pb-6 pr-3">
-              <p className="font-normal text-lg leading-8 text-black">Total</p>
-              <p className="font-medium text-lg leading-8 text-black">$480.00</p>
-            </div>
-            <div className="flex items-center justify-between pb-6 pr-3">
-              <p className="font-normal text-lg leading-8 text-black">Shiping</p>
-              <p className="font-medium text-lg leading-8 text-black">$40.00</p>
-            </div>
-
-            <button
-              className="w-full text-center bg-indigo-600 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">Checkout
-            </button>
-
-          </div>
-        </div>
+        <OrderSummary total={getTotal()} shipping={40} />
       </div>
-
     </section>
   );
 }
 
 export default Cart;
-
-
