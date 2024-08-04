@@ -88,7 +88,7 @@ function Header() {
             <FaCartPlus className='w-full h-full' />
           </Link>
 
-          {
+          {/* {
             auth.user ?
               (<img id='1' className="ml-2 sm:ml-3  w-5  rounded-full"
                 onMouseEnter={() => setDropdown(true)}
@@ -103,7 +103,14 @@ function Header() {
               >
                 <FaRegUser />
               </div>)
-          }
+          } */}
+          <div
+            className='ml-2 sm:ml-3 py-2'
+            onMouseEnter={() => setDropdown(true)}
+            onMouseLeave={() => setDropdown(false)}
+          >
+            <FaRegUser />
+          </div>
           {dropdown && (
             auth.user ? (<div
               className="absolute ml-16 sm:ml-28 top-5 mt-2 w-28 h-20 bg-transparent rounded-md "
