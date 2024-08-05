@@ -21,7 +21,7 @@ function OrderSummary({ total = 0, shipping = 0 }) {
                     <p className="font-bold text-lg leading-8 text-black">${(total + shipping).toFixed(2)}</p>
                 </div>
                 <button
-                    className="w-full text-center bg-indigo-600 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">
+                    className="w-full text-center bg-blue-500 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-blue-600">
                     Checkout
                 </button>
             </div>
