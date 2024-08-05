@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { useParams } from 'react-router-dom';
 
 function EditProduct() {
-    const category = useCategory()
+    const {category} = useCategory()
     const [image, setImage] = useState(null)
     const { handleSubmit, register, formState: { errors }, reset } = useForm()
     const [loder, setloder] = useState(false)
