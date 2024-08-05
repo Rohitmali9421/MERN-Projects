@@ -24,7 +24,7 @@ function EditProduct() {
                 category:defaultCategoryName.name
             })
             const output = document.getElementById('preview_img');
-            output.src =productData[0].image.url
+            output.src =productData?.[0]?.image?.url
             setloder(false) 
         } catch (error) {
             console.error('Failed to fetch product info:', error);
@@ -39,20 +39,22 @@ function EditProduct() {
         setloder(true)
         const { title, price, description, content, category } = data
         try {
-            await axios.post('http://localhost:8000/api/products', {
-                title,
-                price,
-                description,
-                content,
-                category,
-                image
-            }, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-            reset()
-            setImage(null)
+            // await axios.post('http://localhost:8000/api/products', {
+            //     title,
+            //     price,
+            //     description,
+            //     content,
+            //     category,
+            //     image
+            // }, {
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data',
+            //     },
+            // })
+            // reset()
+            // setImage(null)
+            console.log("done");
+            
             setloder(false)
         } catch (error) {
             console.error('Failed to fetch Catagory info:', error);
@@ -66,7 +68,6 @@ function EditProduct() {
         setImage(file);
         const output = document.getElementById('preview_img');
         output.src = URL.createObjectURL(file);
-        
     };
 
     if (loder == true) {
@@ -178,14 +179,12 @@ function EditProduct() {
                                 className="hidden"
                                 accept="image/*"
                                 onChangeCapture={loadFile}
-                                {...register("image", {
-                                    required: 'Image is required',
-                                })}
+                                
                             />
                             <label htmlFor="image" className="cursor-pointer">
                                 <img id="preview_img" className="mx-auto " alt="Image Preview" />
                             </label>
-                            {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image.message}</p>}
+                            
                         </div>
                         <img className='h-auto' src="https://img.freepik.com/free-vector/landing-page-image-upload-concept_23-2148298840.jpg?t=st=1721152175~exp=1721155775~hmac=d146e5751c60e0b82466d3c75e09443fd9069188512c4744f2918b49376266e3&w=740" alt="Upload Illustration" />
                     </div>
