@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
     if (token) {
       try {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const response = await axios.get('http://localhost:8000/user/infor');
+        const response = await axios.get('/user/infor');
         setAuth({ user: response.data, token });
       } catch (error) {
         console.error('Failed to fetch user info:', error);
@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
 
   const addToCart = async (id) => {
     try {
-      await axios.patch('http://localhost:8000/user/cart', {
+      await axios.patch('/user/cart', {
         productId: id
       });
       toast.success("Added to cart");
