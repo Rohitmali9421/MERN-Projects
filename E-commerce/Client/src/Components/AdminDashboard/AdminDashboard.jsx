@@ -26,7 +26,7 @@ function AdminDashboard() {
          
         if (auth?.token) {
             try {
-                const response = await axios.get('http://localhost:8000/user/infor', {
+                const response = await axios.get('/user/infor', {
                 });
                 setAdmin(response.data.role);
             } catch (error) {

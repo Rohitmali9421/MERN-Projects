@@ -13,7 +13,7 @@ function AddProduct() {
         setloder(true)
         const { title, price, description, content, category } = data
         try {
-            const response=await axios.post('http://localhost:8000/api/products', {
+            const response=await axios.post('/api/products', {
                 title,
                 price,
                 description,

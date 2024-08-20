@@ -18,7 +18,7 @@ function Products() {
   const fetchProducts = async () => {
     try {
       setLoader(true);
-      const response = await axios.get('http://localhost:8000/api/products');
+      const response = await axios.get('/api/products');
       setProducts(response.data);
       setLoader(false);
     } catch (error) {
@@ -31,7 +31,7 @@ function Products() {
     try {
       setPopup(false);
       setLoader(true);
-      const response = await axios.delete(`http://localhost:8000/api/products/${deleteProductId}`);
+      const response = await axios.delete(`/api/products/${deleteProductId}`);
       fetchProducts();
       toast.success(response?.data?.msg);
       setLoader(false);
