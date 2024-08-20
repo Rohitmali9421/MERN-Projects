@@ -27,7 +27,7 @@ function CustomNextArrow(props) {
 }
 
 function Category() {
-    const {category} = useCategory();
+    const { category } = useCategory();
     var settings = {
         dots: true,
         infinite: true,
@@ -55,7 +55,7 @@ function Category() {
                 settings: {
                     slidesToShow: 4,
                     slidesToScroll: 4,
-                    initialSlide:0
+                    initialSlide: 0
                 }
             },
             {
@@ -70,24 +70,26 @@ function Category() {
 
     return (
         <div className='w-full max-w-[1300px] mx-auto '>
-        <div className="bg-white pt-4 pb-8 px-2 md:px-10 max-w-[1300px] mx-8 ">
-            <h1 className="text-blue-500 text-center font-bold text-3xl my-5">Categories</h1>
-            <div className='mx-auto w-full h-full slider-container'>
-                <Slider {...settings}>
-                    {
-                        category ? category.map((onecategory) => (
-                            <CatagoryCard
-                                key={onecategory._id}
-                                name={onecategory.name}
-                                imageUrl={onecategory.imageURL.url}
-                            />
-                        )) : (
-                            <p> Not Found</p>
-                        )
-                    }
-                </Slider>
+            <div className="bg-white pt-4 pb-8 px-2 md:px-10 max-w-[1300px] mx-8 ">
+                <h1 className="text-blue-500 text-center font-bold text-3xl my-5">Categories</h1>
+                <div className='mx-auto w-full h-full slider-container'>
+                    <Slider {...settings}>
+                        {
+                            Array.isArray(category) && category.length > 0 ? (
+                                category.map((onecategory) => (
+                                    <CatagoryCard
+                                        key={onecategory._id}
+                                        name={onecategory.name}
+                                        imageUrl={onecategory.imageURL.url}
+                                    />
+                                ))
+                            ) : (
+                                <p>Not Found</p>
+                            )
+                        }
+                    </Slider>
+                </div>
             </div>
-        </div>
         </div>
     );
 }
