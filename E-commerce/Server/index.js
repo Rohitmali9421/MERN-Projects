@@ -1,5 +1,4 @@
 require("dotenv").config();
-const cors = require("cors");
 const express = require("express");
 const UserRouter = require("./Routes/User");
 const ProductRouter = require("./Routes/Product");
@@ -15,7 +14,6 @@ const app = express();
 connectMongoDB(URI);
 
 //Middlerwares
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
