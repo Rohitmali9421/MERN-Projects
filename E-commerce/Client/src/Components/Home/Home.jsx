@@ -22,7 +22,7 @@ function Home() {
                 </div>
             </div >
             
-                {/* <Category /> */}
+                <Category />
             
             <PopularProducts />
             <OurServices />
