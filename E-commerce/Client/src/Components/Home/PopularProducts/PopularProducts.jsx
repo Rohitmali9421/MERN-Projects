@@ -7,7 +7,7 @@ function PopularProducts() {
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/products?category=66aa7a255b11e0d4b28e0b30');
+            const response = await axios.get('api/products?category=66aa7a255b11e0d4b28e0b30');
             setPopularProduct(response.data);
         } catch (error) {
             console.error('Failed to fetch Popular Products info:', error);
