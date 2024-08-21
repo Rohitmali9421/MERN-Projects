@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password, setServerError) => {
     try {
-      const response = await axios.post('/user/login', {
+      const response = await axios.post('https://mern-server-rohit.vercel.app/user/login', {
         email,
         password,
       });
