@@ -20,7 +20,7 @@ function Cart() {
     const fetchProducts = async () => {
       try {
         const productRequests = auth.user.cart.map(item =>
-          axios.get(`http://localhost:8000/api/products?_id=${item.productID}`)
+          axios.get(`https://mern-server-rohit.vercel.app/api/products?_id=${item.productID}`)
         );
         const responses = await Promise.all(productRequests);
         const fetchedProducts = responses.map(response => response.data[0]);
