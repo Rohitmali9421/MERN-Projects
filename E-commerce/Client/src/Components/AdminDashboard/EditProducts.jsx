@@ -13,7 +13,7 @@ function EditProduct() {
     const fetchProduct = async () => {
         try {
             setloder(true)
-            const response = await axios.get(`http://localhost:8000/api/products?_id=${id}`);
+            const response = await axios.get(`https://mern-server-rohit.vercel.app/api/products?_id=${id}`);
             const productData = response.data;
             const defaultCategoryName = category?.find(cat => cat._id == response.data[0]?.category);
             reset({

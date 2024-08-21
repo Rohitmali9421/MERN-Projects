@@ -26,7 +26,7 @@ function AdminDashboard() {
          
         if (auth?.token) {
             try {
-                const response = await axios.get('/user/infor', {
+                const response = await axios.get('https://mern-server-rohit.vercel.app/user/infor', {
                 });
                 setAdmin(response.data.role);
             } catch (error) {
