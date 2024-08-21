@@ -8,7 +8,6 @@ const connectMongoDB = require("./config/connection");
 
 const port = process.env.PORT || 8000;
 const URI = process.env.MONGODB_URI;
-
 const app = express();
 
 //MongoDB Connection
