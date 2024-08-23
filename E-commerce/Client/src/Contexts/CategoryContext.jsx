@@ -21,7 +21,6 @@ const CategoryProvider = ({ children }) => {
         fetchCategory();
     }, []);
 
-
     return (
         <CategoryContext.Provider value={ {category,fetchCategory} }>
             {children}
