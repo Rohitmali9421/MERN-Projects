@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const { setUser } = require("../Services/Auth");
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
+
 async function handleSignUp(req, res) {
   try {
     const errors = validationResult(req);
