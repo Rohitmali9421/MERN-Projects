@@ -34,7 +34,7 @@ function Header() {
               className={({ isActive }) =>
                 ` ${isActive ? "text-orange-500 hover:text-orange-500" : "text-gray-500"} lg:mx-4 mx-2 font-semibold hover:text-gray-700`
               }>
-              HOME
+              Home
             </NavLink>
           </li>
           <li>
@@ -43,7 +43,7 @@ function Header() {
               className={({ isActive }) =>
                 ` ${isActive ? "text-orange-500 hover:text-orange-500" : "text-gray-500"} lg:mx-4 mx-2 font-semibold hover:text-gray-700`
               }>
-              ABOUT
+              About
             </NavLink>
           </li>
           <li>
@@ -52,7 +52,7 @@ function Header() {
               className={({ isActive }) =>
                 ` ${isActive ? "text-orange-500 hover:text-orange-500" : "text-gray-500"} lg:mx-4 mx-2 font-semibold hover:text-gray-700`
               }>
-              PRODUCTS
+              Products
             </NavLink>
           </li>
           <li>
@@ -61,7 +61,7 @@ function Header() {
               className={({ isActive }) =>
                 ` ${isActive ? "text-orange-500 hover:text-orange-500" : "text-gray-500"} lg:mx-4 mx-2 font-semibold hover:text-gray-700`
               }>
-              SUPPORT
+              Support
             </NavLink>
           </li>
           {

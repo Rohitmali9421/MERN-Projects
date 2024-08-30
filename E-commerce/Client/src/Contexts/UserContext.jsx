@@ -45,15 +45,16 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password, setServerError) => {
     try {
-      const response = await axios.post('https://mern-server-rohit.vercel.app/user/login', {
+      const response = await axios.post('http://localhost:8000/user/login', {
         email,
         password,
       });
-      const { user, token } = response.data;
-      setAuth({ user, token });
-      localStorage.setItem('token', token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      toast.success('Login successful.');
+      console.log(response)
+      // const { user, token } = response.data;
+      // setAuth({ user, token });
+      // localStorage.setItem('token', token);
+      // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      // toast.success('Login successful.');
     } catch (error) {
       const errorMessage = error.response?.data?.error || 'Login failed. Please try again.';
       setServerError(errorMessage);
