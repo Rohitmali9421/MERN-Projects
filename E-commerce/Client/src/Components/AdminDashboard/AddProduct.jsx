@@ -12,6 +12,8 @@ function AddProduct() {
     const addProduct = async (data) => {
         setloder(true)
         const { title, price, description, content, category } = data
+        
+        
         try {
             const response=await axios.post('https://mern-server-rohit.vercel.app/api/products', {
                 title,
@@ -25,6 +27,7 @@ function AddProduct() {
                     'Content-Type': 'multipart/form-data',
                 },
             })
+            console.log(image);
             toast.success(response?.data?.msg);
             reset()
             setImage(null)
