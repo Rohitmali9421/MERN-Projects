@@ -26,7 +26,7 @@ function Category() {
 
   const fetchCategories = async () => {
     try {
-      const { data } = await axios.get('https://mern-server-rohit.vercel.app/api/category');
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/category`);
       setCategories(data);
     } catch (error) {
       console.error('Failed to fetch categories:', error);
@@ -37,7 +37,7 @@ function Category() {
     try {
       setLoader(true);
       setPopup(false);
-      const { data } = await axios.delete(`http://localhost:8000/api/category/${deleteCategoryId}`);
+      const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/api/category/${deleteCategoryId}`);
       fetchCategories();
       setLoader(false);
       toast.success(data.msg);
@@ -52,7 +52,7 @@ function Category() {
     try {
       setLoader(true);
       const { name } = data;
-      const response=await axios.post('http://localhost:8000/api/category', { image, name }, {
+      const response=await axios.post(`${import.meta.env.VITE_API_URL}/api/category`, { image, name }, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       fetchCategories();

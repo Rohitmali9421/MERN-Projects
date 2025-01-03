@@ -15,7 +15,7 @@ function AddProduct() {
         
         
         try {
-            const response=await axios.post('https://mern-server-rohit.vercel.app/api/products', {
+            const response=await axios.post(`${import.meta.env.VITE_API_URL}/api/products`, {
                 title,
                 price,
                 description,

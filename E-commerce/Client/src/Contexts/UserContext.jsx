@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
     if (token) {
       try {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const response = await axios.get('https://mern-server-rohit.vercel.app/user/infor');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/infor`);
         setAuth({ user: response.data, token });
       } catch (error) {
         console.error('Failed to fetch user info:', error);
@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
 
   const addToCart = async (id) => {
     try {
-      await axios.patch('https://mern-server-rohit.vercel.app/user/cart', {
+      await axios.patch(`${import.meta.env.VITE_API_URL}/user/cart`, {
         productId: id
       });
       toast.success("Added to cart");
@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password, setServerError) => {
     try {
-      const response = await axios.post('http://localhost:8000/user/login', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/login`, {
         email,
         password,
       });
@@ -64,7 +64,7 @@ const AuthProvider = ({ children }) => {
 
   const signUp = async (name, email, password, setServerError) => {
     try {
-      const response = await axios.post('https://mern-server-rohit.vercel.app/user/signup', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/signup`, {
         name,
         email,
         password,

@@ -12,7 +12,7 @@ function ProductDetails() {
 // this is for fetching product from product id from url
   const fetchProduct = async () => {
     try {
-      const response = await axios.get('https://mern-server-rohit.vercel.app/api/products?_id=' + id);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products?_id=` + id);
       setProduct(response.data?.[0]);
     } catch (error) {
       console.error('Failed to fetch Products info:', error);
