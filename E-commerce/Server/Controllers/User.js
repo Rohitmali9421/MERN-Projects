@@ -3,7 +3,8 @@ const bcrypt = require("bcrypt");
 const { setUser } = require("../Services/Auth");
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
-
+const Product = require("../Models/Product");
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 async function handleSignUp(req, res) {
   try {
     const errors = validationResult(req);
@@ -70,6 +71,51 @@ async function handleGetUser(req, res) {
     res.status(500).json({ error: "Server error. Please try again later." });
   }
 }
+async function handlecheckout(req, res) {
+  try {
+    const products  = req.body.cart; 
+
+    const lineItems = [];
+
+    for (const product of products) {
+      const productDetails = await Product.findById(product.productID);
+
+     
+      if (!productDetails) {
+        throw new Error(`Product with ID ${product.id} not found`);
+      }
+
+      
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: productDetails.title,
+            images: [productDetails.image.url], 
+          },
+          unit_amount: productDetails.price * 100, 
+        },
+        quantity: product.quantity, 
+      });
+    }
+
+    
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card","upi"],
+      line_items: lineItems,
+      mode: "payment",
+      success_url: "https://yourdomain.com/success",
+      cancel_url: "https://yourdomain.com/cancel",
+    });
+
+    res.json({ id: session.id });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+  
+
 
 async function handleAddToCart(req, res) {
   try {
@@ -169,4 +215,5 @@ module.exports = {
   handleAddToCart,
   handleCartIncreaseQuantity,
   handleCartDecreaseQuantity,
+  handlecheckout
 };

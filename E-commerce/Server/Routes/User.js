@@ -1,4 +1,5 @@
 const express = require("express");
+
 const {
   handleSignUp,
   handleLogin,
@@ -6,6 +7,7 @@ const {
   handleAddToCart,
   handleCartIncreaseQuantity,
   handleCartDecreaseQuantity,
+  handlecheckout,
 } = require("../Controllers/User");
 const { authenticateToken } = require("../middlewares/Auth");
 const { validateLogin, validateSignUp } = require("../middlewares/validation");
@@ -17,5 +19,6 @@ router.patch("/cartIncrement", authenticateToken, handleCartIncreaseQuantity);
 router.patch("/cartDecrement", authenticateToken, handleCartDecreaseQuantity);
 router.post("/login", validateLogin, handleLogin);
 router.get("/infor", authenticateToken, handleGetUser);
+router.post("/checkout", authenticateToken, handlecheckout);
 
 module.exports = router;
