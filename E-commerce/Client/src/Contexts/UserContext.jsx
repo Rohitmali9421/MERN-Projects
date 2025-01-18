@@ -2,8 +2,9 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const AuthContext = createContext();
 
+
+const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     user: null,
@@ -29,6 +30,8 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const addToCart = async (id) => {
+    
+   
     try {
       await axios.patch(`${import.meta.env.VITE_API_URL}/user/cart`, {
         productId: id
@@ -49,12 +52,11 @@ const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      console.log(response)
-      // const { user, token } = response.data;
-      // setAuth({ user, token });
-      // localStorage.setItem('token', token);
-      // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      // toast.success('Login successful.');
+      const { user, token } = response.data;
+      setAuth({ user, token });
+      localStorage.setItem('token', token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      toast.success('Login successful.');
     } catch (error) {
       const errorMessage = error.response?.data?.error || 'Login failed. Please try again.';
       setServerError(errorMessage);

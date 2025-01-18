@@ -7,10 +7,9 @@ function Login() {
   const { auth, login } = useAuth();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState('');
-
+  const [show, setShow] = useState(false); // Toggle password visibility
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  // Handle form submission
   const onSubmit = async (data) => {
     const { email, password } = data;
     login(email, password, setServerError);
@@ -22,8 +21,6 @@ function Login() {
       navigate('/');
     }
   }, [auth, navigate]);
-
-
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -61,12 +58,19 @@ function Login() {
           <div>
             <div className="flex items-center justify-between">
               <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
+              <button
+                type="button"
+                onClick={() => setShow(!show)}
+                className="text-sm text-blue-500 hover:text-blue-700"
+              >
+                {show ? 'Hide' : 'Show'}
+              </button>
             </div>
             <div className="mt-2">
               <input
                 id="password"
                 name="password"
-                type="password"
+                type={show ? 'text' : 'password'}
                 {...register('password', {
                   required: 'Password is required',
                   minLength: {
@@ -83,7 +87,7 @@ function Login() {
               {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
             </div>
             <Link to="/signup">
-              <p className='text-end mt-2 text-sm text-blue-400'>New to PeekMart? Create an account</p>
+              <p className="text-end mt-2 text-sm text-blue-400">New to PeekMart? Create an account</p>
             </Link>
           </div>
 

@@ -6,9 +6,8 @@ import { FaBoxOpen } from "react-icons/fa";
 import { IoMdCart } from "react-icons/io";
 import { LiaCreativeCommonsSampling } from "react-icons/lia";
 import { GiNotebook } from "react-icons/gi";
-import { BiSolidCoupon } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../Contexts/UserContext';
 
@@ -16,14 +15,19 @@ function AdminDashboard() {
     const [admin, setAdmin] = useState(0);
     const [menu, toggleMenu] = useState(false);
     const [loader, setLoader] = useState(true);
-    const { auth } = useAuth();
+    const { auth,logout } = useAuth();
 
     const handleMenuToggle = () => {
         toggleMenu(!menu);
     };
-
+    const navigate=useNavigate()
+    const handleLoout = () => {
+        logout()
+        navigate("/")
+        
+    }
     const checkAdmin = async () => {
-         
+
         if (auth?.token) {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/infor`, {
@@ -90,15 +94,10 @@ function AdminDashboard() {
                                 <h1 className='font-bold'>Orders</h1>
                             </li>
                         </Link>
-                        <Link to="/admin/coupons">
-                            <li className='flex items-center my-3 hover:bg-blue-50 rounded-md px-4 py-2'>
-                                <BiSolidCoupon className='text-xl text-blue-500 mr-3' />
-                                <h1 className='font-bold'>Coupons</h1>
-                            </li>
-                        </Link>
+
                     </ul>
                     <ul className='mb-32'>
-                        <li className='flex items-center my-3 hover:bg-blue-50 rounded-md px-4 py-2'>
+                        <li onClick={handleLoout} className='flex items-center my-3 hover:bg-blue-50 rounded-md px-4 py-2'>
                             <BiLogOut className='text-xl text-red-600 mr-3' />
                             <h1 className='font-bold'>Logout</h1>
                         </li>

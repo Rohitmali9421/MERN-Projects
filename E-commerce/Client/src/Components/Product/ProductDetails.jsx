@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios';
 import { useAuth } from '../../Contexts/UserContext';
 import ProductDeatailFeatures from './ProductDeatailFeatures';
@@ -8,7 +8,7 @@ function ProductDetails() {
   const { addToCart } = useAuth()
   const { id } = useParams()
   const [product, setProduct] = useState()
-
+ 
 // this is for fetching product from product id from url
   const fetchProduct = async () => {
     try {

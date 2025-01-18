@@ -23,7 +23,6 @@ import Dashboard from './Components/AdminDashboard/Dashboard.jsx';
 import Products from './Components/AdminDashboard/Products.jsx';
 import Category from './Components/AdminDashboard/Category.jsx';
 import Orders from './Components/AdminDashboard/Orders.jsx';
-import Coupons from './Components/AdminDashboard/Coupons.jsx';
 import AddProduct from './Components/AdminDashboard/AddProduct.jsx';
 import EditProduct from './Components/AdminDashboard/EditProducts.jsx';
 
@@ -51,7 +50,6 @@ const router = createBrowserRouter(
         <Route path="products/edit/:id" element={<EditProduct />} />
         <Route path="category" element={<Category />} />
         <Route path="orders" element={<Orders />} />
-        <Route path="coupons" element={<Coupons />} />
       </Route>
 
     </>
