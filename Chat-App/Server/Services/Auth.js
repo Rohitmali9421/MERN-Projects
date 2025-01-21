@@ -6,8 +6,12 @@ function setUser(user) {
       id: user._id,
       email: user.email,
     },
-    secret
+    secret,
+    {
+      expiresIn:"15d"
+    }
   );
+  
 }
 function getUser(token) {
   if (!token) return null;
