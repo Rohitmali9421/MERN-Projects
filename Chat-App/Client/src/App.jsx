@@ -8,25 +8,25 @@ import Home from './Pages/Home';
 import Start from './Components/Start';
 import Chat from './Components/Chat';
 const router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
+    createRoutesFromElements(
+        <>
 
-      <Route path="/" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/home" element={<Home />}>
-        <Route path="chat" element={<Start/>} />
-        <Route path="chat/:id" element={<Chat/>} />
-      </Route>
-    </>
-  )
+            <Route path="/" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/home" element={<Home />}>
+                <Route path="chat" element={<Start />} />
+                <Route path="chat/:id" element={<Chat />} />
+            </Route>
+        </>
+    )
 );
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <RouterProvider router={router} />
+        </Provider>
+    );
 };
 
 export default App;

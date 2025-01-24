@@ -14,14 +14,14 @@ const useSocket = (userId) => {
       });
       setSocket(newSocket);
 
-      // Handle online users
+     
       newSocket.on("getOnlineUsers", (users) => {
         dispatch(setOnlineUsers(users));
       });
 
-      // Handle new messages
+      
       newSocket.on("newMessage", (message) => {
-        dispatch(addMessage(message)); // Update messages in Redux
+        dispatch(addMessage(message));
       });
 
       return () => {

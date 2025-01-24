@@ -1,50 +1,50 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-// Async Thunk for User Login
 export const loginUser = createAsyncThunk(
-  'auth/loginUser',
+  "auth/loginUser",
   async (userdata, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/user/login', userdata);
-      return response.data; 
+      const response = await axios.post(
+        "http://localhost:8000/api/user/login",
+        userdata
+      );
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || 'Login failed');
+      return rejectWithValue(error.response?.data || "Login failed");
     }
   }
 );
 
-// Async Thunk for User Signup
 export const signupUser = createAsyncThunk(
-  'auth/signupUser',
+  "auth/signupUser",
   async (userdata, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/user/signup', userdata);
+      const response = await axios.post(
+        "http://localhost:8000/api/user/signup",
+        userdata
+      );
       return response.data; // Assuming the response contains user data
     } catch (error) {
-      return rejectWithValue(error.response?.data || 'Signup failed');
+      return rejectWithValue(error.response?.data || "Signup failed");
     }
   }
 );
 
-// Async Thunk for Checking Authentication
 export const checkAuth = createAsyncThunk(
-  'auth/checkAuth',
+  "auth/checkAuth",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:8000/api/user'); 
-      return response.data; 
-      
-      
+      const response = await axios.get("http://localhost:8000/api/user");
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || 'Not authenticated');
+      return rejectWithValue(error.response?.data || "Not authenticated");
     }
   }
 );
 
-// Initial State
 const initialState = {
   user: null,
   loading: false,
@@ -52,9 +52,8 @@ const initialState = {
   isAuthenticated: false,
 };
 
-// Auth Slice
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
@@ -64,7 +63,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Login
+
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -80,7 +79,6 @@ const authSlice = createSlice({
         state.error = action.payload.error;
       })
 
-      // Signup
       .addCase(signupUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -95,7 +93,6 @@ const authSlice = createSlice({
         state.error = action.payload.error;
       })
 
-      // Check Authentication
       .addCase(checkAuth.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -112,6 +109,5 @@ const authSlice = createSlice({
   },
 });
 
-// Export Actions and Reducer
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;

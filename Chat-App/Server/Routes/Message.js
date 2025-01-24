@@ -4,5 +4,5 @@ const authenticateToken = require("../middlewares/Auth");
 const router=express.Router();
 
 router.post("/send/:recieverId",authenticateToken,handleSendMessage)
-router.get("/send/:recieverId",authenticateToken,handlegetMessage)
+router.get("/get/:recieverId",authenticateToken,handlegetMessage)
 module.exports=router
