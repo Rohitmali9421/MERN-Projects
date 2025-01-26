@@ -64,18 +64,19 @@ function Chat() {
                         messages.map((message) => (
                             <div
                                 key={message._id}
-                                className={`flex w-full ${message.senderId === user._id ? "justify-end" : "justify-start"
-                                    }`}
+                                className={`flex w-full ${message.senderId === user._id ? "justify-end" : "justify-start"}`}
                             >
                                 <div
-                                    className={`p-3 rounded-2xl shadow-lg max-w-xs ${message.senderId === user._id
-                                            ? "bg-blue-600 text-white"
-                                            : "bg-gray-200 text-gray-800"
+                                    className={`px-4 py-2 shadow-lg max-w-xs rounded-2xl transition-all duration-300 ${message.senderId === user._id
+                                            ? "bg-blue-600 text-white rounded-bl-none transform hover:scale-105"
+                                            : "bg-gray-200 text-gray-800 rounded-br-none transform hover:scale-105"
                                         }`}
                                 >
-                                    {message.text}
+                                    <p className="text-sm">{message.text}</p>
                                 </div>
                             </div>
+
+
                         ))
                     ) : (
                         <p className="text-gray-300 text-center">No messages yet</p>
