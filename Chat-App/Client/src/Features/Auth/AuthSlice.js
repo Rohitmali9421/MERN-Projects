@@ -9,7 +9,7 @@ export const loginUser = createAsyncThunk(
   async (userdata, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/user/login",
+        `${import.meta.env.VITE_API_URL}/api/user/login`,
         userdata
       );
       return response.data;
@@ -24,7 +24,7 @@ export const signupUser = createAsyncThunk(
   async (userdata, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/user/signup",
+        `${import.meta.env.VITE_API_URL}/api/user/signup`,
         userdata
       );
       return response.data; // Assuming the response contains user data
@@ -38,7 +38,7 @@ export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:8000/api/user");
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Not authenticated");

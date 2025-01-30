@@ -9,7 +9,7 @@ const useSocket = (userId) => {
 
   useEffect(() => {
     if (userId) {
-      const newSocket = io("http://localhost:8000", {
+      const newSocket = io(import.meta.env.VITE_API_URL, {
         query: { userId },
       });
       setSocket(newSocket);
