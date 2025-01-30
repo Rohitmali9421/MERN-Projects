@@ -29,7 +29,7 @@ function Home() {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/api/user/users");
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/users`);
             setUsers(response.data);
             setError(null);
         } catch (err) {
