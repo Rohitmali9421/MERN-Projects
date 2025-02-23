@@ -9,17 +9,19 @@ const useSocket = (userId) => {
 
   useEffect(() => {
     if (userId) {
+        
       const newSocket = io(import.meta.env.VITE_API_URL, {
         query: { userId },
+        withCredentials: true, 
+        transports: ["websocket", "polling"]
       });
+
       setSocket(newSocket);
 
-     
       newSocket.on("getOnlineUsers", (users) => {
         dispatch(setOnlineUsers(users));
       });
 
-      
       newSocket.on("newMessage", (message) => {
         dispatch(addMessage(message));
       });

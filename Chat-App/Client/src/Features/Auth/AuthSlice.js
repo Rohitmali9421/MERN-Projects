@@ -3,18 +3,32 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userdata, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/user/login`,
-        userdata
+        userdata,
+        { withCredentials: true }
       );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Login failed");
+    }
+  }
+);
+export const logoutUser = createAsyncThunk(
+  "auth/logoutUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/user/logout`,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Logout failed");
     }
   }
 );
@@ -25,9 +39,10 @@ export const signupUser = createAsyncThunk(
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/user/signup`,
-        userdata
+        userdata,
+        { withCredentials: true }
       );
-      return response.data; // Assuming the response contains user data
+      return response.data; 
     } catch (error) {
       return rejectWithValue(error.response?.data || "Signup failed");
     }
@@ -38,7 +53,10 @@ export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/user`,
+        { withCredentials: true }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Not authenticated");
@@ -60,6 +78,11 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      state.loading = false;
+      state.error = null;
+    },
+    update: (state, action) => {
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -78,6 +101,20 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.error;
+      })
+
+      .addCase(logoutUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; 
       })
 
       .addCase(signupUser.pending, (state) => {
@@ -110,5 +147,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, update } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,6 +1,10 @@
 const bcrypt = require("bcrypt");
 const User = require("../Models/User");
 const { setUser, getUser } = require("../Services/Auth");
+const {
+  uploadOnCloudinary,
+  deleteOnCloudinary,
+} = require("../Services/Choudinary");
 
 const handlesignUp = async (req, res) => {
   try {
@@ -21,9 +25,9 @@ const handlesignUp = async (req, res) => {
 
     res.cookie("jwt", accessToken, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      sameSite: "strict",
-      secure: process.env.NODE_ENV == "Development",
+      httpOnly: true, 
+      secure: true, 
+      sameSite: "None",
     });
     return res.status(200).json(userWithoutPassword);
   } catch (error) {
@@ -31,8 +35,6 @@ const handlesignUp = async (req, res) => {
   }
 };
 const handleLogin = async (req, res) => {
-  
-  
   try {
     const { email, password } = req.body;
 
@@ -46,9 +48,9 @@ const handleLogin = async (req, res) => {
     const { password: _, ...userWithoutPassword } = user._doc;
     res.cookie("jwt", accessToken, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      sameSite: "strict",
-      secure: process.env.NODE_ENV == "Development",
+      httpOnly: true, 
+      secure: true, 
+      sameSite: "None",
     });
     return res.status(200).json(userWithoutPassword);
   } catch (error) {
@@ -77,7 +79,6 @@ const handleGetUsers = async (req, res) => {
     }).select("-password");
 
     return res.status(200).json(filteredUsers);
-
   } catch (error) {
     return res
       .status(500)
@@ -87,28 +88,62 @@ const handleGetUsers = async (req, res) => {
 const handleGetUser = async (req, res) => {
   try {
     const token = req.cookies.jwt;
-    
+
     if (!token) {
       return res.status(401).json({
         error: "Authentication token is missing or invalid.",
       });
     }
 
-    const decoded=getUser(token)
+    const decoded = getUser(token);
 
+    const user = await User.findOne({ _id: decoded.id }).select("-password");
 
-    
-    const user = await User.findOne({_id:decoded.id}).select("-password");
-
-    
     return res.status(200).json(user);
-
   } catch (error) {
     console.error("Error fetching user:", error.message);
 
     return res.status(500).json({
-      error: "Server error. Please try again later."  
+      error: "Server error. Please try again later.",
     });
+  }
+};
+const handleEditUser = async (req, res) => {
+  try {
+    const { name } = req.body;
+    let imagePath = req.body.imagePath;
+
+    // Fetch the existing user
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    let profilePic = user.profilePic; // Keep the old image if no new image is provided
+
+    if (imagePath) {
+      // If a new image is provided, delete the old image from Cloudinary
+      if (user.profilePic && user.profilePic.public_id) {
+        await deleteOnCloudinary(user.profilePic.public_id);
+      }
+
+      // Upload the new image to Cloudinary
+      profilePic = await uploadOnCloudinary(imagePath);
+    }
+
+    // Update the user's profile with new data
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { name, profilePic },
+      { new: true } // Return the updated user
+    );
+    const { password: _, ...userWithoutPassword } = updatedUser._doc;
+    return res.status(200).json(userWithoutPassword);
+  } catch (error) {
+    console.error("Error Editing user:", error.message);
+    return res
+      .status(500)
+      .json({ error: "Server error. Please try again later." });
   }
 };
 
@@ -118,4 +153,5 @@ module.exports = {
   logout,
   handleGetUsers,
   handleGetUser,
+  handleEditUser,
 };

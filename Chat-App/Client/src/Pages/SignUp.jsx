@@ -11,7 +11,7 @@ function SignUp() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     useEffect(() => {
         if (user) {
-            navigate("/home")
+            navigate("/home/chat")
         }
     }, [user])
 
@@ -22,7 +22,7 @@ function SignUp() {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-                <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Login</h2>
+                <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">SignUp</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
                     <div>

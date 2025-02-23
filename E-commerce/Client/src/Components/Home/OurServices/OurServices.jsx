@@ -1,32 +1,101 @@
 import React from 'react'
 import ServiceCard from './ServiceCard'
 
+const categories = [
+    {
+        id: 1,
+        image: "https://demo.tailgrids.com/templates/shopper/build/src/assets/ecom-images/categories/category-03/image-01.jpg",
+        label: "#House",
+        title: "Express Your Beautiful Life Through Furniture",
+        size: "large",
+    },
+    {
+        id: 2,
+        image: "https://demo.tailgrids.com/templates/shopper/build/src/assets/ecom-images/categories/category-03/image-02.jpg",
+        label: "#Accessories",
+        title: "Discover Our Accessories Collection",
+        size: "small",
+    },
+    {
+        id: 3,
+        image: "https://demo.tailgrids.com/templates/shopper/build/src/assets/ecom-images/categories/category-03/image-03.jpg",
+        label: "#Office",
+        title: "Make Your Workspace More Comfortable",
+        size: "small",
+    },
+];
 function OurServices() {
     return (
-        <div >
-            <h1 className="text-blue-500 text-center font-bold text-3xl my-4">Our Services</h1>
-            <div className="flex gap-4 justify-center my-10">
+        <section className="bg-white py-20 ">
+            
+                <div className="px-8 md:mx-10 grid md:grid-cols-2 gap-4">
 
-                <ServiceCard
-                    serviceTitle="Order Online"
-                    serviceDescription="Conveniently place your orders online. Browse our menu, select your items, and order from the comfort of your home."
-                    imageUrl="https://res.cloudinary.com/dhturqqs5/image/upload/v1720344215/Ecommerce-MERN/UI%20Items/Homepage/rmupoehltpkqdoqlpvao.png"
-                />
+                    <div className="row-span-2  relative mb-10 w-full">
+                        <img
+                            src={categories[0].image}
+                            alt="category"
+                            className="h-full w-full object-cover object-center"
+                        />
+                        <div className="absolute left-0 top-0 h-full w-full px-6 py-10 sm:px-10">
+                            <div className="max-w-[400px]">
+                                <span className="mb-3 block text-base font-medium text-body-color">
+                                    {categories[0].label}
+                                </span>
+                                <a
+                                    href="#"
+                                    className="text-xl font-semibold text-dark lg:text-2xl xl:text-[28px] xl:leading-10"
+                                >
+                                    {categories[0].title}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="relative mb-10 w-full">
+                        <img
+                            src={categories[1].image}
+                            alt="category"
+                            className="h-full w-full object-cover object-center"
+                        />
+                        <div className="absolute left-0 top-0 h-full w-full px-6 py-10 sm:px-10">
+                            <div className="max-w-[400px]">
+                                <span className="mb-3 block text-base font-medium text-body-color">
+                                    {categories[0].label}
+                                </span>
+                                <a
+                                    href="#"
+                                    className="text-xl font-semibold text-dark lg:text-2xl xl:text-[28px] xl:leading-10"
+                                >
+                                    {categories[0].title}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="relative mb-10 w-full">
+                        <img
+                            src={categories[2].image}
+                            alt="category"
+                            className="h-full w-full object-cover object-center"
+                        />
+                        <div className="absolute left-0 top-0 h-full w-full px-6 py-10 sm:px-10">
+                            <div className="max-w-[400px]">
+                                <span className="mb-3 block text-base font-medium text-body-color">
+                                    {categories[0].label}
+                                </span>
+                                <a
+                                    href="#"
+                                    className="text-xl font-semibold text-dark lg:text-2xl xl:text-[28px] xl:leading-10"
+                                >
+                                    {categories[0].title}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-                <ServiceCard
-                    serviceTitle="Fast Delivery"
-                    serviceDescription="Get your orders delivered quickly and efficiently. We ensure timely delivery to your doorstep."
-                    imageUrl="https://res.cloudinary.com/dhturqqs5/image/upload/v1720344217/Ecommerce-MERN/UI%20Items/Homepage/hwca1xwbw0xrq9v0lmob.png"
-                />
 
-                <ServiceCard
-                    serviceTitle="Takeaway"
-                    serviceDescription="Enjoy our delicious meals on the go. Order online and pick up your meal at your convenience."
-                    imageUrl="https://res.cloudinary.com/dhturqqs5/image/upload/v1720345821/Ecommerce-MERN/UI%20Items/Homepage/nnlz1lsznwkg4hozpvuf.png"
-                />
 
-            </div>
-        </div>
+                </div>
+            
+        </section>
     )
 }
 

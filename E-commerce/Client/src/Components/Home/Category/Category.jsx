@@ -9,7 +9,7 @@ function CustomPrevArrow(props) {
     return (
         <IoIosArrowDropleftCircle
             className={className}
-            style={{ ...style, display: "block", color: "#3b82f6", fontSize: "2rem" }} // Customize the style
+            style={{ ...style, display: "none", color: "#3b82f6", fontSize: "2rem" }} // Customize the style
             onClick={onClick}
         />
     );
@@ -20,7 +20,7 @@ function CustomNextArrow(props) {
     return (
         <IoIosArrowDroprightCircle
             className={className}
-            style={{ ...style, display: "block", color: "#3b82f6", fontSize: "2rem" }} // Customize the style
+            style={{ ...style, display: "none", color: "#3b82f6", fontSize: "2rem" }} // Customize the style
             onClick={onClick}
         />
     );

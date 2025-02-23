@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeMessagesByIds } from "../Features/Socket/SocketSlice";
 import useFetchMessage from "../hooks/useFetchMessage";
 import { sendMessage } from "../Services/api";
+import { useSearchParams } from "react-router-dom";
 
 function Chat() {
+    const [searchParams] = useSearchParams();
     const { toggleSidebar } = useOutletContext();
     const { id } = useParams();
     const [messages, setMessages] = useState([]);
@@ -16,7 +18,7 @@ function Chat() {
     const { message: newMessages } = useSelector((state) => state.socket);
     const messagesEndRef = useRef(null);
     const dispatch = useDispatch();
-
+    
     useEffect(() => {
         if (newMessages && newMessages.length > 0) {
             const filteredMessages = newMessages.filter(
@@ -40,6 +42,7 @@ function Chat() {
         scrollToBottom();
     }, [messages]);
 
+    
     return (
         <div className="w-full h-screen flex items-center bg-blue-400">
             <div
@@ -55,7 +58,8 @@ function Chat() {
                         className="mr-4 sm:hidden block cursor-pointer text-blue-500"
                         onClick={toggleSidebar}
                     />
-                    <h2 className="text-xl font-bold text-gray-800">Chat Room</h2>
+                    <img src={searchParams.get("profilepic")} alt="" className="w-8 h-8 rounded-full mr-2" />
+                    <h2 className="text-xl font-bold text-gray-800">{searchParams.get("name")}</h2>
                 </div>
 
 

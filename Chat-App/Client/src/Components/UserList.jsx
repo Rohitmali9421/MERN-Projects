@@ -1,6 +1,6 @@
 function UserList({ name, image, isOnline }) {
     return (
-        <div className="flex items-center p-3 hover:bg-blue-50 cursor-pointer transition duration-200 ease-in-out rounded-lg">
+        <div className="flex items-center p-3 hover:bg-blue-50 cursor-pointer transition duration-200 ease-in-out rounded-lg border-b-2">
 
             <div className="relative">
                 <img

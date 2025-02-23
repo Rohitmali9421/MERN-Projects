@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuth, loginUser } from '../Features/Auth/AuthSlice';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
     const dispatch = useDispatch();
@@ -70,6 +70,10 @@ function Login() {
                             {loading ? 'Logging in...' : 'Login'}
                         </button>
                     </div>
+                    <Link to="/signup">
+                    <p className="text-center mt-2 text-sm text-blue-400"> Create an account</p>
+                    </Link>
+                    
                 </form>
 
                 {error && (

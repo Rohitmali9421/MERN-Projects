@@ -9,9 +9,11 @@ const express = require("express");
 const port = process.env.PORT || 8000;
 const URI = process.env.MONGODB_URI;
 connectMongoDB(URI);
+
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_API,
     credentials: true,
   })
 );
